@@ -1,0 +1,36 @@
+{
+    "name": "railken/amethyst-attribute",
+    "type": "library",
+    "keywords": ["laravel", "amethyst", "amethyst-attribute", "attribute"],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1",
+        "railken/amethyst-common": "0.1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "orchestra/testbench": "3.6.*",
+        "railken/amethyst-foo": "0.1.*"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Railken\\Amethyst\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { 
+            "Railken\\Amethyst\\Tests\\": "tests/" 
+        }
+    },
+    "extra": {
+        "amethyst": {
+            "package": "attribute",
+            "namespace": "Railken\\Amethyst"
+        },
+        "laravel": {
+            "providers": [
+                "Railken\\Amethyst\\Providers\\AttributeServiceProvider"
+            ]
+        }
+    }
+}
