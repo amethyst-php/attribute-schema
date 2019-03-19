@@ -6,6 +6,7 @@ use Railken\Amethyst\Fakers\AttributeValueFaker;
 use Railken\Amethyst\Fakers\FooFaker;
 use Railken\Amethyst\Managers\AttributeManager;
 use Railken\Amethyst\Managers\AttributeValueManager;
+use Railken\Amethyst\Managers\FooManager;
 use Railken\Amethyst\Models\Foo;
 use Railken\Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
@@ -35,9 +36,11 @@ class AttributeValueTest extends BaseTest
             'schema' => 'email',
         ])->getResource();
 
+        $fooManager = new FooManager();
+
         $attributable = $this->getManager()->createOrFail([
             'attributable_type' => Foo::class,
-            'attributable_id'   => Foo::create(FooFaker::make()->parameters()->toArray())->id,
+            'attributable_id'   => $fooManager->createOrFail(FooFaker::make()->parameters())->getResource()->id,
             'attribute_id'      => $attribute->id,
             'value'             => 'test@test.net',
         ])->getResource();
