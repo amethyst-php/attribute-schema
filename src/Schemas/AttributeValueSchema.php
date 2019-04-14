@@ -2,7 +2,6 @@
 
 namespace Railken\Amethyst\Schemas;
 
-use Illuminate\Support\Facades\Config;
 use Railken\Amethyst\Attributes as AmethystAttributes;
 use Railken\Amethyst\Managers\AttributeManager;
 use Railken\Lem\Attributes;
