@@ -17,8 +17,6 @@ class AttributeValueSchema extends Schema
      */
     public function getAttributes()
     {
-        $attributableConfig = Config::get('amethyst.attribute.data.attributable.attributes.attributable.options');
-
         return [
             Attributes\IdAttribute::make(),
             Attributes\BelongsToAttribute::make('attribute_id')
@@ -26,12 +24,12 @@ class AttributeValueSchema extends Schema
                 ->setRelationManager(AttributeManager::class)
                 ->setRequired(true),
             AmethystAttributes\CustomAttribute::make('value'),
-            Attributes\EnumAttribute::make('attributable_type', array_keys($attributableConfig))
+            Attributes\EnumAttribute::make('attributable_type', app('amethyst')->getMorphListable('attribute-value', 'attributable'))
                 ->setRequired(true),
             Attributes\MorphToAttribute::make('attributable_id')
                 ->setRelationKey('attributable_type')
                 ->setRelationName('attributable')
-                ->setRelations($attributableConfig)
+                ->setRelations(app('amethyst')->getMorphRelationable('attribute-value', 'attributable'))
                 ->setRequired(true),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
