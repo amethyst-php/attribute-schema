@@ -40,7 +40,7 @@ class AttributeValueManager extends Manager
 
         // Boot the attribute before updating it
         if ($result->ok()) {
-            $class = Config::get('amethyst.attribute.schema.'.$entity->attribute->schema);
+            $class = Config::get('amethyst.attribute.schema.'.ucfirst($entity->attribute->schema));
             $attribute = $class::make(...array_merge(['value'], (array) $entity->attribute->options));
             $attribute->setManager($this);
             $attribute->boot();

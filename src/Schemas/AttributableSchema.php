@@ -16,15 +16,13 @@ class AttributableSchema extends Schema
      */
     public function getAttributes()
     {
-        $attributableConfig = Config::get('amethyst.attribute.data.attributable.attributes.attributable.options');
-
         return [
             Attributes\IdAttribute::make(),
             Attributes\BelongsToAttribute::make('attribute_id')
                 ->setRelationName('attribute')
                 ->setRelationManager(AttributeManager::class)
                 ->setRequired(true),
-            Attributes\EnumAttribute::make('attributable_type', array_keys($attributableConfig))
+            Attributes\EnumAttribute::make('attributable_type', app('amethyst')->getMorphListable('attribute-value', 'attributable'))
                 ->setRequired(true),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),

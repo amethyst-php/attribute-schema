@@ -18,7 +18,7 @@ class AttributeFaker extends Faker
         $bag = new Bag();
         $bag->set('name', $faker->name);
         $bag->set('description', $faker->text);
-        $bag->set('schema', 'text');
+        $bag->set('schema', 'Text');
         $bag->set('options', []);
 
         return $bag;

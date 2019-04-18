@@ -17,7 +17,7 @@ class AttributableFaker extends Faker
 
         $bag = new Bag();
         $bag->set('attribute', AttributeFaker::make()->parameters()->toArray());
-        $bag->set('attributable_type', \Railken\Amethyst\Models\Foo::class);
+        $bag->set('attributable_type', 'foo');
 
         return $bag;
     }
