@@ -19,14 +19,6 @@ class AttributeServiceProvider extends CommonServiceProvider
             return new \Railken\Amethyst\Services\Attributable();
         });
 
-        \Illuminate\Database\Eloquent\Builder::macro('attributeValues', function (): MorphMany {
-            return app('amethyst')->createMacroMorphRelation($this, \Railken\Amethyst\Models\AttributeValue::class, 'attributeValues', 'attributable');
-        });
-
-        \Illuminate\Database\Eloquent\Builder::macro('attrs', function () {
-            return app('amethyst.attributable')->attachAttrsToModel($this);
-        });
-
     }
 
     /**
@@ -35,6 +27,14 @@ class AttributeServiceProvider extends CommonServiceProvider
     public function boot()
     {
         parent::boot();
+
+        \Illuminate\Database\Eloquent\Builder::macro('attributeValues', function (): MorphMany {
+            return app('amethyst')->createMacroMorphRelation($this, \Railken\Amethyst\Models\AttributeValue::class, 'attributeValues', 'attributable');
+        });
+
+        \Illuminate\Database\Eloquent\Builder::macro('attrs', function () {
+            return app('amethyst.attributable')->attachAttrsToModel($this);
+        });
 
         app('amethyst.attributable')->boot();
     }
