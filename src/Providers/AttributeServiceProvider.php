@@ -3,7 +3,6 @@
 namespace Railken\Amethyst\Providers;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Railken\Amethyst\Common\CommonServiceProvider;
 
 class AttributeServiceProvider extends CommonServiceProvider
@@ -18,7 +17,6 @@ class AttributeServiceProvider extends CommonServiceProvider
         $this->app->singleton('amethyst.attributable', function ($app) {
             return new \Railken\Amethyst\Services\Attributable();
         });
-
     }
 
     /**
@@ -38,5 +36,4 @@ class AttributeServiceProvider extends CommonServiceProvider
 
         app('amethyst.attributable')->boot();
     }
-
 }

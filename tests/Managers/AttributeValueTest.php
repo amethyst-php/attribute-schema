@@ -4,9 +4,9 @@ namespace Railken\Amethyst\Tests\Managers;
 
 use Railken\Amethyst\Fakers\AttributeValueFaker;
 use Railken\Amethyst\Fakers\FooFaker;
+use Railken\Amethyst\Managers\AttributableManager;
 use Railken\Amethyst\Managers\AttributeManager;
 use Railken\Amethyst\Managers\AttributeValueManager;
-use Railken\Amethyst\Managers\AttributableManager;
 use Railken\Amethyst\Managers\FooManager;
 use Railken\Amethyst\Models\Foo;
 use Railken\Amethyst\Tests\BaseTest;
@@ -37,15 +37,13 @@ class AttributeValueTest extends BaseTest
             'schema' => 'Email',
         ])->getResource();
 
-       (new AttributableManager())->createOrFail([
-            'attribute_id'   => $attribute->id,
-            'attributable_type' => 'foo'
+        (new AttributableManager())->createOrFail([
+            'attribute_id'      => $attribute->id,
+            'attributable_type' => 'foo',
         ])->getResource();
-
 
         $fooManager = new FooManager();
         $foo = $fooManager->createOrFail(FooFaker::make()->parameters())->getResource();
-
 
         $this->assertEquals(true, $foo->attrs()->has('email'));
 
@@ -59,27 +57,25 @@ class AttributeValueTest extends BaseTest
         $this->assertEquals('test@test.net', $attributable->value);
 
         $attributable = (new AttributableManager())->createOrFail([
-            'attributable_type'   => 'foo',
-            'attribute_id' => $attribute->id,
+            'attributable_type' => 'foo',
+            'attribute_id'      => $attribute->id,
         ])->getResource();
 
         // Reboot manager fooManager...
         $fooManager = new FooManager();
 
-
         $fooManager->update($foo, [
             'attrs' => [
-                $attribute->name => 'test2@test.net'
-            ]
+                $attribute->name => 'test2@test.net',
+            ],
         ]);
 
         $this->assertEquals('test2@test.net', $foo->attrs()->email);
-        $this->assertEquals('test2@test.net', $fooManager->getSerializer()->serialize($foo)->get('attrs.email'));  
+        $this->assertEquals('test2@test.net', $fooManager->getSerializer()->serialize($foo)->get('attrs.email'));
 
         $foo = Foo::find($foo->id);
 
         $this->assertEquals('test2@test.net', $foo->attrs()->email);
         $this->assertEquals('test2@test.net', $fooManager->getSerializer()->serialize($foo)->get('attrs.email'));
-
     }
 }
