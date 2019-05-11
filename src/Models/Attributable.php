@@ -31,6 +31,6 @@ class Attributable extends Model implements EntityContract
      */
     public function attribute(): BelongsTo
     {
-        return $this->belongsTo(Attribute::class);
+        return $this->belongsTo(config('amethyst.attribute.data.attribute.model'));
     }
 }
