@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Amethyst\Services;
+namespace Amethyst\Services;
 
 use Railken\Bag;
 

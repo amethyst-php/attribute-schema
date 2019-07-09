@@ -1,15 +1,15 @@
 <?php
 
-namespace Railken\Amethyst\Tests\Managers;
+namespace Amethyst\Tests\Managers;
 
-use Railken\Amethyst\Fakers\AttributeValueFaker;
-use Railken\Amethyst\Fakers\FooFaker;
-use Railken\Amethyst\Managers\AttributableManager;
-use Railken\Amethyst\Managers\AttributeManager;
-use Railken\Amethyst\Managers\AttributeValueManager;
-use Railken\Amethyst\Managers\FooManager;
-use Railken\Amethyst\Models\Foo;
-use Railken\Amethyst\Tests\BaseTest;
+use Amethyst\Fakers\AttributeValueFaker;
+use Amethyst\Fakers\FooFaker;
+use Amethyst\Managers\AttributableManager;
+use Amethyst\Managers\AttributeManager;
+use Amethyst\Managers\AttributeValueManager;
+use Amethyst\Managers\FooManager;
+use Amethyst\Models\Foo;
+use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 
 class AttributeValueTest extends BaseTest

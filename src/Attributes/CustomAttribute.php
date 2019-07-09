@@ -1,6 +1,6 @@
 <?php
 
-namespace Railken\Amethyst\Attributes;
+namespace Amethyst\Attributes;
 
 use Railken\Lem\Attributes\TextAttribute as BaseAttribute;
 

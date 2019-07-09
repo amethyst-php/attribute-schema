@@ -1,8 +1,8 @@
 <?php
 
-namespace Railken\Amethyst\Providers;
+namespace Amethyst\Providers;
 
-use Railken\Amethyst\Common\CommonServiceProvider;
+use Amethyst\Common\CommonServiceProvider;
 
 class AttributeServiceProvider extends CommonServiceProvider
 {
@@ -14,7 +14,7 @@ class AttributeServiceProvider extends CommonServiceProvider
         parent::register();
 
         $this->app->singleton('amethyst.attributable', function ($app) {
-            return new \Railken\Amethyst\Services\Attributable();
+            return new \Amethyst\Services\Attributable();
         });
     }
 

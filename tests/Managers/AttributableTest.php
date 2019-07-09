@@ -1,10 +1,10 @@
 <?php
 
-namespace Railken\Amethyst\Tests\Managers;
+namespace Amethyst\Tests\Managers;
 
-use Railken\Amethyst\Fakers\AttributableFaker;
-use Railken\Amethyst\Managers\AttributableManager;
-use Railken\Amethyst\Tests\BaseTest;
+use Amethyst\Fakers\AttributableFaker;
+use Amethyst\Managers\AttributableManager;
+use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 
 class AttributableTest extends BaseTest

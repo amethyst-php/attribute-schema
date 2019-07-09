@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Amethyst\Services;
+namespace Amethyst\Services;
 
 use Illuminate\Support\Collection;
-use Railken\Amethyst\Managers\AttributeValueManager;
+use Amethyst\Managers\AttributeValueManager;
 use Railken\Bag;
 use Railken\Lem\Attributes\BaseAttribute;
 use Railken\Lem\Contracts\EntityContract;

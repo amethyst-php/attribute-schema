@@ -1,9 +1,9 @@
 <?php
 
-namespace Railken\Amethyst\Services;
+namespace Amethyst\Services;
 
-use Railken\Amethyst\Managers\AttributableManager;
-use Railken\Amethyst\Models;
+use Amethyst\Managers\AttributableManager;
+use Amethyst\Models;
 use Railken\Lem\Manager;
 
 class Attributable
