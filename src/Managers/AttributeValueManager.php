@@ -2,8 +2,8 @@
 
 namespace Amethyst\Managers;
 
-use Illuminate\Support\Facades\Config;
 use Amethyst\Common\ConfigurableManager;
+use Illuminate\Support\Facades\Config;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Manager;
 use Railken\Lem\Result;
@@ -21,7 +21,7 @@ class AttributeValueManager extends Manager
      * Add the attribute dinamically during the filling.
      *
      * @param \Amethyst\Models\Attributable $entity
-     * @param \Railken\Bag|array                    $parameters
+     * @param \Railken\Bag|array            $parameters
      *
      * @return \Railken\Lem\Result
      */

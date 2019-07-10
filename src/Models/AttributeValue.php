@@ -2,11 +2,11 @@
 
 namespace Amethyst\Models;
 
+use Amethyst\Common\ConfigurableModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Amethyst\Common\ConfigurableModel;
 use Railken\Lem\Contracts\EntityContract;
 
 class AttributeValue extends Model implements EntityContract

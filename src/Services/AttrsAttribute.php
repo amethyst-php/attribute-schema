@@ -2,8 +2,8 @@
 
 namespace Amethyst\Services;
 
-use Illuminate\Support\Collection;
 use Amethyst\Managers\AttributeValueManager;
+use Illuminate\Support\Collection;
 use Railken\Bag;
 use Railken\Lem\Attributes\BaseAttribute;
 use Railken\Lem\Contracts\EntityContract;
