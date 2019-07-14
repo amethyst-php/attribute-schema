@@ -13,7 +13,7 @@ class Attributable
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 
-            $name = $manager->newEntity()->getMorphName();
+            $name = app('amethyst')->tableize($manager->getEntity());
 
             if (!app('amethyst')->validMorphRelation('attribute-value', 'attributable', $name)) {
                 return;
@@ -34,14 +34,14 @@ class Attributable
     {
         $model = $builder->getModel();
 
-        $name = $model->getMorphName();
+        $name = app('amethyst')->tableize($model);
 
         if (!app('amethyst')->validMorphRelation('attribute-value', 'attributable', $name)) {
             throw new \BadMethodCallException(sprintf("Method %s:%s() doesn't exist", get_class($model), 'attrs'));
         }
 
         if (!$model->internalAttributes->has('attrs')) {
-            $all = $this->getSchemaAttributesByName($model->getMorphName())->mapWithKeys(function ($item) {
+            $all = $this->getSchemaAttributesByName($name)->mapWithKeys(function ($item) {
                 return [$item->attribute->name => null];
             });
 

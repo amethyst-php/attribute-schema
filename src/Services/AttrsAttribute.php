@@ -62,7 +62,7 @@ class AttrsAttribute extends BaseAttribute
 
         foreach ($entity->internalAttributes->get($this->getName(), []) as $key => $value) {
             $errors = $errors->merge($manager->updateOrCreate([
-                'attributable_type' => $entity->getMorphName(),
+                'attributable_type' => app('amethyst')->tableize($entity),
                 'attributable_id'   => $entity->id,
                 'attribute_id'      => app('amethyst.attributable')->findAttributeByName($key)->id,
             ], [
