@@ -8,6 +8,14 @@ use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Manager;
 use Railken\Lem\Result;
 
+/**
+ * @method \Amethyst\Models\AttributeValue newEntity()
+ * @method \Amethyst\Schemas\AttributeValueSchema getSchema()
+ * @method \Amethyst\Repositories\AttributeValueRepository getRepository()
+ * @method \Amethyst\Serializers\AttributeValueSerializer getSerializer()
+ * @method \Amethyst\Validators\AttributeValueValidator getValidator()
+ * @method \Amethyst\Authorizers\AttributeValueAuthorizer getAuthorizer()
+ */
 class AttributeValueManager extends Manager
 {
     use ConfigurableManager;
