@@ -2,66 +2,37 @@
 
 namespace Amethyst\Services;
 
-use Amethyst\Managers\AttributableManager;
+use Amethyst\Managers\AttributeManager;
 use Amethyst\Models;
 use Railken\Lem\Manager;
+use Railken\Lem\Attributes\TextAttribute;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
+use Railken\Lem\Contracts\EntityContract;
+use Illuminate\Support\Facades\Schema;
 
 class Attributable
 {
     public function boot()
     {
+        if (!Schema::hasTable(Config::get('amethyst.attribute.data.attribute.table'))) {
+            return;
+        }
+
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 
             $name = app('amethyst')->tableize($manager->getEntity());
 
-            if (!app('amethyst')->validMorphRelation('attribute-value', 'attributable', $name)) {
-                return;
+
+            $attributes = Models\Attribute::where(['model' => $name])->get();
+
+            foreach ($attributes as $attributeRaw) {
+                $class = config('amethyst.attribute.schema.' . $attributeRaw->schema);
+                $attribute = $class::make($attributeRaw->name)->setManager($manager);
+                $attribute->boot();
+                $manager->addAttribute($attribute);
             }
-
-            $attributableManager = new AttributableManager();
-
-            $attributables = $attributableManager->getRepository()->findBy(['attributable_type' => $name]);
-
-            $attribute = AttrsAttribute::make('attrs')->setManager($manager);
-            $attribute->boot();
-
-            $manager->addAttribute($attribute);
         });
-    }
-
-    public function attachAttrsToModel($builder)
-    {
-        $model = $builder->getModel();
-
-        $name = app('amethyst')->tableize($model);
-
-        if (!app('amethyst')->validMorphRelation('attribute-value', 'attributable', $name)) {
-            throw new \BadMethodCallException(sprintf("Method %s:%s() doesn't exist", get_class($model), 'attrs'));
-        }
-
-        if (!$model->internalAttributes->has('attrs')) {
-            $all = $this->getSchemaAttributesByName($name)->mapWithKeys(function ($item) {
-                return [$item->attribute->name => null];
-            });
-
-            $values = $model->attributeValues()->get()->mapWithKeys(function ($item) {
-                return [$item->attribute->name => $item->value];
-            });
-
-            $model->internalAttributes->set('attrs', AttributeBag::factory(array_merge($all->toArray(), $values->toArray())));
-        }
-
-        return $model->internalAttributes->get('attrs', AttributeBag::factory());
-    }
-
-    public function findAttributeByName(string $name)
-    {
-        return Models\Attribute::where('name', $name)->first();
-    }
-
-    public function getSchemaAttributesByName($model)
-    {
-        return Models\Attributable::where('attributable_type', $model)->get();
     }
 }

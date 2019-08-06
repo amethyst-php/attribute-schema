@@ -3,6 +3,8 @@
 namespace Amethyst\Providers;
 
 use Amethyst\Common\CommonServiceProvider;
+use Amethyst\Models\Attribute;
+use Amethyst\Observers\AttributeObserver;
 
 class AttributeServiceProvider extends CommonServiceProvider
 {
@@ -24,11 +26,9 @@ class AttributeServiceProvider extends CommonServiceProvider
     public function boot()
     {
         parent::boot();
-
-        \Illuminate\Database\Eloquent\Builder::macro('attrs', function () {
-            return app('amethyst.attributable')->attachAttrsToModel($this);
-        });
-
+        
         app('amethyst.attributable')->boot();
+
+        Attribute::observe(AttributeObserver::class);
     }
 }

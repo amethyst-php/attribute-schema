@@ -20,6 +20,8 @@ class AttributeFaker extends Faker
         $bag->set('description', $faker->text);
         $bag->set('schema', 'Text');
         $bag->set('options', []);
+        $bag->set('model', 'foo');
+        $bag->set('nullable', false);
 
         return $bag;
     }

@@ -17,9 +17,10 @@ class CreateAttributesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('schema');
+            $table->boolean('nullable')->default(true);
             $table->text('options')->nullable();
+            $table->string('model');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
