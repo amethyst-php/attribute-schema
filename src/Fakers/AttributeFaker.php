@@ -19,9 +19,10 @@ class AttributeFaker extends Faker
         $bag->set('name', $faker->name);
         $bag->set('description', $faker->text);
         $bag->set('schema', 'Text');
+        $bag->set('regex', '/^[a-zA-Z_][a-zA-Z0-9_]*$/');
         $bag->set('options', []);
         $bag->set('model', 'foo');
-        $bag->set('nullable', false);
+        $bag->set('required', false);
 
         return $bag;
     }

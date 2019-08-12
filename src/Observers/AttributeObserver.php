@@ -16,42 +16,44 @@ class AttributeObserver
      */
     public function created(Attribute $attribute)
     {
-        $data = app('amethyst')->findDataByName($attribute->model);
-
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute) {
-
-            $method = $this->getMethod($attribute);
-
-            $column = $table->$method($attribute->name);
-
-            if ($attribute->nullable) {
-                $column->nullable();
-            }
-        });
-
-        $this->reload($attribute);
+        $this->updated($attribute, false);
     }
 
     /**
      * Handle the Attribute "updated" event.
      *
      * @param \Amethyst\Models\Attribute $attribute
+     * @param bool $onChange
      */
-    public function updated(Attribute $attribute)
+    public function updated(Attribute $attribute, bool $onChange = true)
     {
         $data = app('amethyst')->findDataByName($attribute->model);
 
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute) {
+
+        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
+
+            if ($onChange) {
+                $oldName = $attribute->getOriginal()['name'];
+
+                if ($attribute->name !== $oldName) {
+                    $table->renameColumn($oldName, $attribute->name);
+                }
+            }
+        });
+        
+        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
 
             $method = $this->getMethod($attribute);
 
             $column = $table->$method($attribute->name);
 
-            if ($attribute->nullable) {
+            if (!$attribute->required) {
                 $column->nullable();
             }
 
-            $column->change();
+            if ($onChange) {
+                $column->change();
+            }
         });
 
         $this->reload($attribute);
@@ -81,19 +83,7 @@ class AttributeObserver
      */
     public function getMethod(Attribute $attribute): string
     {
-        if ($attribute->schema === 'Text' || $attribute->schema === 'Email') {
-            return 'string';
-        }
-
-        if ($attribute->schema === 'Number') {
-            return 'float';
-        }
-
-        if ($attribute->schema === 'LongText') {
-            return 'text';
-        }
-
-        throw new \Exception(sprintf("Cannot find anything for %s", $attribute->schema));
+        return $attribute->schema;
     }
 
     public function reload(Attribute $attribute)
@@ -101,6 +91,7 @@ class AttributeObserver
         $data = app('amethyst')->findDataByName($attribute->model);
 
         Arr::get($data, 'model')::$internalInitialization = null;
-        event(new \Railken\EloquentMapper\Events\EloquentMapUpdate);
+
+        event(new \Railken\EloquentMapper\Events\EloquentMapUpdate($attribute->model));
     }
 }

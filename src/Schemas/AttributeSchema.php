@@ -19,16 +19,24 @@ class AttributeSchema extends Schema
         return [
             Attributes\IdAttribute::make(),
             Attributes\TextAttribute::make('name')
-                ->setRequired(true),
+                ->setRequired(true)
+                ->setValidator(function (EntityContract $entity, $value) {
+                    return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $value);
+                }),
             Attributes\LongTextAttribute::make('description'),
             Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute.schema')))
                 ->setRequired(true),
+            Attributes\TextAttribute::make('regex')
+                ->setRequired(false)
+                ->setValidator(function (EntityContract $entity, $value) {
+                    return preg_match($value, null) !== false;
+                }),
             Attributes\YamlAttribute::make('options'),
-            Attributes\TextAttribute::make('model', app('amethyst')->getData()->keys()->toArray())
+            Attributes\EnumAttribute::make('model', app('amethyst')->getData()->keys()->toArray())
                 ->setRequired(true),
-            Attributes\BooleanAttribute::make('nullable')
+            Attributes\BooleanAttribute::make('required')
                 ->setDefault(function (EntityContract $entity) {
-                    return true;
+                    return false;
                 }),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),

@@ -24,12 +24,20 @@ class Attributable
 
             $name = app('amethyst')->tableize($manager->getEntity());
 
-
             $attributes = Models\Attribute::where(['model' => $name])->get();
 
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute.schema.' . $attributeRaw->schema);
                 $attribute = $class::make($attributeRaw->name)->setManager($manager);
+
+                $attribute->setRequired($attributeRaw->required);
+
+                if (!empty($attributeRaw->regex)) {
+                    $attribute->setValidator(function ($entity, $value) use ($attributeRaw) {
+                        return preg_match($attributeRaw->regex, $value);
+                    });
+                }
+
                 $attribute->boot();
                 $manager->addAttribute($attribute);
             }
