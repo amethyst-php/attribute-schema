@@ -83,7 +83,8 @@ class AttributeObserver
      */
     public function getMethod(Attribute $attribute): string
     {
-        return $attribute->schema;
+        $class = config('amethyst.attribute.schema.' . $attribute->schema);
+        return $class::make($attribute->name)->getSchema();
     }
 
     public function reload(Attribute $attribute)
