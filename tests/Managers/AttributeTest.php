@@ -3,10 +3,10 @@
 namespace Amethyst\Tests\Managers;
 
 use Amethyst\Fakers\AttributeFaker;
+use Amethyst\Fakers\FooFaker;
 use Amethyst\Managers\AttributeManager;
 use Amethyst\Managers\FooManager;
 use Amethyst\Models\Foo;
-use Amethyst\Fakers\FooFaker;
 use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 
@@ -33,7 +33,7 @@ class AttributeTest extends BaseTest
         $attribute = (new AttributeManager())->createOrFail([
             'name'   => 'email',
             'schema' => 'Email',
-            'model'  => 'foo'
+            'model'  => 'foo',
         ])->getResource();
 
         $fooManager = new FooManager();
@@ -49,6 +49,5 @@ class AttributeTest extends BaseTest
         $foo = Foo::find($foo->id);
 
         $this->assertEquals(true, empty($foo->email));
-
     }
 }

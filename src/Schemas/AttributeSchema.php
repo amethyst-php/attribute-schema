@@ -4,8 +4,8 @@ namespace Amethyst\Schemas;
 
 use Illuminate\Support\Facades\Config;
 use Railken\Lem\Attributes;
-use Railken\Lem\Schema;
 use Railken\Lem\Contracts\EntityContract;
+use Railken\Lem\Schema;
 
 class AttributeSchema extends Schema
 {

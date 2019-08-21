@@ -2,14 +2,10 @@
 
 namespace Amethyst\Services;
 
-use Amethyst\Managers\AttributeManager;
 use Amethyst\Models;
-use Railken\Lem\Manager;
-use Railken\Lem\Attributes\TextAttribute;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Railken\Lem\Contracts\EntityContract;
 use Illuminate\Support\Facades\Schema;
+use Railken\Lem\Manager;
 
 class Attributable
 {
@@ -27,7 +23,7 @@ class Attributable
             $attributes = Models\Attribute::where(['model' => $name])->get();
 
             foreach ($attributes as $attributeRaw) {
-                $class = config('amethyst.attribute.schema.' . $attributeRaw->schema);
+                $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
                 $attribute = $class::make($attributeRaw->name)->setManager($manager);
 
                 $attribute->setRequired($attributeRaw->required);

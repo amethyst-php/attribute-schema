@@ -4,10 +4,9 @@ namespace Amethyst\Models;
 
 use Amethyst\Common\ConfigurableModel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Railken\Lem\Contracts\EntityContract;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
+use Railken\Lem\Contracts\EntityContract;
 
 /**
  * @property string $schema
@@ -29,7 +28,7 @@ class Attribute extends Model implements EntityContract
     }
 
     /**
-     * Get attributes
+     * Get attributes.
      *
      * @param string $config
      *

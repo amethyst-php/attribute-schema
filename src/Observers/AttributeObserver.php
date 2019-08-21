@@ -3,9 +3,9 @@
 namespace Amethyst\Observers;
 
 use Amethyst\Models\Attribute;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 
 class AttributeObserver
 {
@@ -23,15 +23,13 @@ class AttributeObserver
      * Handle the Attribute "updated" event.
      *
      * @param \Amethyst\Models\Attribute $attribute
-     * @param bool $onChange
+     * @param bool                       $onChange
      */
     public function updated(Attribute $attribute, bool $onChange = true)
     {
         $data = app('amethyst')->findDataByName($attribute->model);
 
-
         Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
-
             if ($onChange) {
                 $oldName = $attribute->getOriginal()['name'];
 
@@ -40,9 +38,8 @@ class AttributeObserver
                 }
             }
         });
-        
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
 
+        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
             $method = $this->getMethod($attribute);
 
             $column = $table->$method($attribute->name);
@@ -69,7 +66,6 @@ class AttributeObserver
         $data = app('amethyst')->findDataByName($attribute->model);
 
         Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute) {
-
             $column = $table->dropColumn($attribute->name);
         });
 
@@ -83,7 +79,8 @@ class AttributeObserver
      */
     public function getMethod(Attribute $attribute): string
     {
-        $class = config('amethyst.attribute.schema.' . $attribute->schema);
+        $class = config('amethyst.attribute.schema.'.$attribute->schema);
+
         return $class::make($attribute->name)->getSchema();
     }
 
