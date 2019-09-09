@@ -29,7 +29,7 @@ class AttributeSchema extends Schema
             Attributes\TextAttribute::make('regex')
                 ->setRequired(false)
                 ->setValidator(function (EntityContract $entity, $value) {
-                    try { 
+                    try {
                         return preg_match($value, null) !== false;
                     } catch (\Throwable $exception) {
                         return false;
