@@ -29,7 +29,11 @@ class AttributeSchema extends Schema
             Attributes\TextAttribute::make('regex')
                 ->setRequired(false)
                 ->setValidator(function (EntityContract $entity, $value) {
-                    return preg_match($value, null) !== false;
+                    try { 
+                        return preg_match($value, null) !== false;
+                    } catch (\Throwable $exception) {
+                        return false;
+                    }
                 }),
             Attributes\YamlAttribute::make('options'),
             Attributes\EnumAttribute::make('model', app('amethyst')->getData()->keys()->toArray())
