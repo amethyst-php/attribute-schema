@@ -6,6 +6,7 @@ use Amethyst\Models;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Railken\Lem\Manager;
+use Symfony\Component\Yaml\Yaml;
 
 class Attributable
 {
@@ -28,10 +29,18 @@ class Attributable
 
                 $attribute->setRequired($attributeRaw->required);
 
+                $options = (object) Yaml::parse((string) $attributeRaw->options);
+
                 if (!empty($attributeRaw->regex)) {
                     $attribute->setValidator(function ($entity, $value) use ($attributeRaw) {
                         return preg_match($attributeRaw->regex, $value);
                     });
+                }
+
+                if (!empty($options)) {
+                    if (!empty($options->options)) {
+                        $attribute->setOptions($options->options);
+                    }
                 }
 
                 $attribute->boot();

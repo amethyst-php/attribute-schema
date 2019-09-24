@@ -9,6 +9,7 @@ use Amethyst\Managers\FooManager;
 use Amethyst\Models\Foo;
 use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
+use Symfony\Component\Yaml\Yaml;
 
 class AttributeTest extends BaseTest
 {
@@ -49,5 +50,43 @@ class AttributeTest extends BaseTest
         $foo = Foo::find($foo->id);
 
         $this->assertEquals(true, empty($foo->email));
+    }
+
+    public function testEnumAttribute()
+    {
+        $attribute = (new AttributeManager())->createOrFail([
+            'name'   => 'select',
+            'schema' => 'Enum',
+            'model'  => 'foo',
+            'options' => Yaml::dump([
+                'options' => [
+                    1,
+                    2,
+                    3
+                ]
+            ])
+        ])->getResource();
+
+        $fooManager = new FooManager();
+        $parameters = FooFaker::make()->parameters()
+            ->set('select', 5);
+
+        $result = $fooManager->create($parameters);
+        $this->assertEquals("FOO_SELECT_NOT_VALID", $result->getSimpleErrors()[0]['code']);
+
+
+        $parameters = FooFaker::make()->parameters()
+            ->set('select', 3);
+
+        $foo = $fooManager->createOrFail($parameters)->getResource();
+
+        $foo = Foo::find($foo->id);
+
+        $this->assertEquals(3, $foo->select);
+
+        $attribute->delete();
+        $foo = Foo::find($foo->id);
+
+        $this->assertEquals(true, empty($foo->select));
     }
 }
