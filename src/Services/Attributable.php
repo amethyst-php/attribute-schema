@@ -10,18 +10,22 @@ use Symfony\Component\Yaml\Yaml;
 
 class Attributable
 {
+    protected $attributes;
+
     public function boot()
     {
         if (!Schema::hasTable(Config::get('amethyst.attribute.data.attribute.table'))) {
             return;
         }
 
+        $this->attributes = Models\Attribute::all();
+
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 
             $name = app('amethyst')->tableize($manager->getEntity());
 
-            $attributes = Models\Attribute::where(['model' => $name])->get();
+            $attributes = $this->attributes->filter(function($attribute) use ($name) { return $attribute->model === $name; });
 
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
