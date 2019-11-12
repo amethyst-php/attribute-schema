@@ -12,14 +12,19 @@ class Attributable
 {
     protected $attributes;
 
+    public function reload()
+    {
+        $this->attributes = Models\Attribute::all();
+    }
+
     public function boot()
     {
         if (!Schema::hasTable(Config::get('amethyst.attribute.data.attribute.table'))) {
             return;
         }
 
-        $this->attributes = Models\Attribute::all();
-
+        $this->reload();
+        
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 

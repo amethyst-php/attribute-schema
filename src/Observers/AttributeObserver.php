@@ -90,6 +90,8 @@ class AttributeObserver
 
         Arr::get($data, 'model')::$internalInitialization = null;
 
+        app('amethyst.attributable')->reload();
+        
         event(new \Railken\EloquentMapper\Events\EloquentMapUpdate($attribute->model));
     }
 }
