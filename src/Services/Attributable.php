@@ -46,7 +46,18 @@ class Attributable
                     });
                 }
 
+
+
                 if (!empty($options)) {
+
+                    if (!empty($options->relationName)) {
+                        $attribute->setRelationName($options->relationName);
+                    }
+                    
+                    if (!empty($options->relationData)) {
+                        $attribute->setRelationManager(app('amethyst')->findManagerByName($options->relationData));
+                    }
+
                     if (!empty($options->options)) {
                         $attribute->setOptions($options->options);
                     }

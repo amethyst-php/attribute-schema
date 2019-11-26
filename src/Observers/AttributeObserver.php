@@ -6,6 +6,7 @@ use Amethyst\Models\Attribute;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
+use Railken\Lem\Attributes\BelongsToAttribute;
 
 class AttributeObserver
 {
@@ -43,6 +44,10 @@ class AttributeObserver
             $method = $this->getMethod($attribute);
 
             $column = $table->$method($attribute->name);
+
+            if (is_subclass_of($attribute->schema, BelongsToAttribute::class)) {
+                $column->unsigned();
+            }
 
             if (!$attribute->required) {
                 $column->nullable();
