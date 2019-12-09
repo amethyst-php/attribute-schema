@@ -6,5 +6,6 @@ return [
     'Number'   => Railken\Lem\Attributes\NumberAttribute::class,
     'Email'    => Railken\Lem\Attributes\EmailAttribute::class,
     'Enum'     => Railken\Lem\Attributes\EnumAttribute::class,
+    'Boolean'     => Railken\Lem\Attributes\BooleanAttribute::class,
     'BelongsTo'     => Railken\Lem\Attributes\BelongsToAttribute::class,
 ];
