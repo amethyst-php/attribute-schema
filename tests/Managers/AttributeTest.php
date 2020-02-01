@@ -55,16 +55,16 @@ class AttributeTest extends BaseTest
     public function testEnumAttribute()
     {
         $attribute = (new AttributeManager())->createOrFail([
-            'name'   => 'select',
-            'schema' => 'Enum',
-            'model'  => 'foo',
+            'name'    => 'select',
+            'schema'  => 'Enum',
+            'model'   => 'foo',
             'options' => Yaml::dump([
                 'options' => [
                     1,
                     2,
-                    3
-                ]
-            ])
+                    3,
+                ],
+            ]),
         ])->getResource();
 
         $fooManager = new FooManager();
@@ -72,8 +72,7 @@ class AttributeTest extends BaseTest
             ->set('select', 5);
 
         $result = $fooManager->create($parameters);
-        $this->assertEquals("FOO_SELECT_NOT_VALID", $result->getSimpleErrors()[0]['code']);
-
+        $this->assertEquals('FOO_SELECT_NOT_VALID', $result->getSimpleErrors()[0]['code']);
 
         $parameters = FooFaker::make()->parameters()
             ->set('select', 3);

@@ -24,13 +24,13 @@ class Attributable
         }
 
         $this->reload();
-        
+
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 
             $name = app('amethyst')->tableize($manager->getEntity());
 
-            $attributes = $this->attributes->filter(function($attribute) use ($name) { return $attribute->model === $name; });
+            $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === $name; });
 
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
@@ -46,14 +46,11 @@ class Attributable
                     });
                 }
 
-
-
                 if (!empty($options)) {
-
                     if (!empty($options->relationName)) {
                         $attribute->setRelationName($options->relationName);
                     }
-                    
+
                     if (!empty($options->relationData)) {
                         $attribute->setRelationManager(app('amethyst')->findManagerByName($options->relationData));
                     }
