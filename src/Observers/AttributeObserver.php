@@ -30,7 +30,7 @@ class AttributeObserver
     {
         $data = app('amethyst')->findDataByName($attribute->model);
 
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
+        Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attribute, $onChange) {
             if ($onChange) {
                 $oldName = $attribute->getOriginal()['name'];
 
@@ -40,7 +40,7 @@ class AttributeObserver
             }
         });
 
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute, $onChange) {
+        Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attribute, $onChange) {
             $method = $this->getMethod($attribute);
 
             $column = $table->$method($attribute->name);
@@ -70,7 +70,7 @@ class AttributeObserver
     {
         $data = app('amethyst')->findDataByName($attribute->model);
 
-        Schema::table(Arr::get($data, 'table'), function (Blueprint $table) use ($attribute) {
+        Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attribute) {
             $column = $table->dropColumn($attribute->name);
         });
 
@@ -93,7 +93,9 @@ class AttributeObserver
     {
         $data = app('amethyst')->findDataByName($attribute->model);
 
-        Arr::get($data, 'model')::$internalInitialization = null;
+        $model = $data->newEntity();
+
+        $model::$internalInitialization = null;
 
         app('amethyst.attributable')->reload();
 
