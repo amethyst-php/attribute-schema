@@ -4,7 +4,6 @@ namespace Amethyst\Observers;
 
 use Amethyst\Models\Attribute;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Railken\Lem\Attributes\BelongsToAttribute;
 
