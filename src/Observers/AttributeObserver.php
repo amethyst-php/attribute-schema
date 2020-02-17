@@ -90,13 +90,17 @@ class AttributeObserver
 
     public function reload(Attribute $attribute)
     {
+        app('amethyst.attributable')->reload();
+
         $data = app('amethyst')->findDataByName($attribute->model);
+
+        // Reloading manager
+        $data->boot();
 
         $model = $data->newEntity();
 
-        $model::$internalInitialization = null;
-
-        app('amethyst.attributable')->reload();
+        // Reloading model
+        $model->ini($model->__config, true);
 
         event(new \Railken\EloquentMapper\Events\EloquentMapUpdate($attribute->model));
     }

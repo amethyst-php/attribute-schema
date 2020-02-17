@@ -28,9 +28,10 @@ class Attributable
         Manager::listen('boot', function ($data) {
             $manager = $data->manager;
 
-            $name = app('amethyst')->tableize($manager->getEntity());
+            $name = $manager->getName();
 
             $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === $name; });
+
 
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
