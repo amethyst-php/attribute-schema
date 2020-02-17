@@ -8,6 +8,6 @@ return [
     'Enum'      => Railken\Lem\Attributes\EnumAttribute::class,
     'Boolean'   => Railken\Lem\Attributes\BooleanAttribute::class,
     'BelongsTo' => Railken\Lem\Attributes\BelongsToAttribute::class,
-    'Date' 		=> Railken\Lem\Attributes\DateAttribute::class,
+    'Date'      => Railken\Lem\Attributes\DateAttribute::class,
     'DateTime'  => Railken\Lem\Attributes\DateTimeAttribute::class,
 ];
