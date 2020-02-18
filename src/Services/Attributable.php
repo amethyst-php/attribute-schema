@@ -32,7 +32,6 @@ class Attributable
 
             $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === $name; });
 
-
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
                 $attribute = $class::make($attributeRaw->name)->setManager($manager);
