@@ -28,9 +28,5 @@ class AttributeServiceProvider extends CommonServiceProvider
         parent::boot();
 
         Attribute::observe(AttributeObserver::class);
-
-        $this->app->booted(function () {
-            app('amethyst.attributable')->boot();
-        });
     }
 }
