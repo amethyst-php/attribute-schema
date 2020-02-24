@@ -36,7 +36,7 @@ class AttributeSchema extends Schema
                     }
                 }),
             Attributes\YamlAttribute::make('options'),
-            Attributes\EnumAttribute::make('model', app('amethyst')->getData()->keys()->toArray())
+            \Amethyst\Core\Attributes\DataNameAttribute::make('model')
                 ->setRequired(true),
             Attributes\BooleanAttribute::make('required')
                 ->setDefault(function (EntityContract $entity) {
