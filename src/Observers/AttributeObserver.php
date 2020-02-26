@@ -47,7 +47,7 @@ class AttributeObserver
 
             $arguments = [$attribute->name];
 
-            if (is_subclass_of($attribute->schema, NumberAttribute::class)) {
+            if ($attribute->schema === 'Number') {
 
                 if (!empty($options->precision)) {
                     $arguments[] = $options->precision;
@@ -60,7 +60,7 @@ class AttributeObserver
 
             $column = $table->$method(...$arguments);
 
-            if (is_subclass_of($attribute->schema, BelongsToAttribute::class)) {
+            if ($attribute->schema === 'BelongsTo') {
                 $column->unsigned();
             }
 
