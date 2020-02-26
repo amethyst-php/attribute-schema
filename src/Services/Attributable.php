@@ -58,6 +58,17 @@ class Attributable
                     if (!empty($options->options)) {
                         $attribute->setOptions($options->options);
                     }
+
+                    if ($attributeRaw->schema === 'Number') {
+
+                        if (!empty($options->precision)) {
+                            $attribute->setPrecision($options->precision);
+                        }
+                        
+                        if (!empty($options->scale)) {
+                            $attribute->setScale($options->scale);
+                        }
+                    }
                 }
 
                 $attribute->boot();
