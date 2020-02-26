@@ -5,8 +5,6 @@ namespace Amethyst\Observers;
 use Amethyst\Models\Attribute;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Railken\Lem\Attributes\BelongsToAttribute;
-use Railken\Lem\Attributes\NumberAttribute;
 use Symfony\Component\Yaml\Yaml;
 
 class AttributeObserver
@@ -48,7 +46,6 @@ class AttributeObserver
             $arguments = [$attribute->name];
 
             if ($attribute->schema === 'Number') {
-
                 if (!empty($options->precision)) {
                     $arguments[] = $options->precision;
                 }
@@ -63,7 +60,6 @@ class AttributeObserver
             if ($attribute->schema === 'BelongsTo') {
                 $column->unsigned();
             }
-
 
             if (!$attribute->required) {
                 $column->nullable();

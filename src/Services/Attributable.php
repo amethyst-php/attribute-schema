@@ -60,11 +60,10 @@ class Attributable
                     }
 
                     if ($attributeRaw->schema === 'Number') {
-
                         if (!empty($options->precision)) {
                             $attribute->setPrecision($options->precision);
                         }
-                        
+
                         if (!empty($options->scale)) {
                             $attribute->setScale($options->scale);
                         }
