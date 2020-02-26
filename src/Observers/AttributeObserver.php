@@ -61,9 +61,7 @@ class AttributeObserver
                 $column->unsigned();
             }
 
-            if (!$attribute->required) {
-                $column->nullable();
-            }
+            $column->nullable();
 
             if ($onChange) {
                 $column->change();
