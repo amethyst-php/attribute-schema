@@ -18,6 +18,9 @@ class AttributeSchema extends Schema
     {
         return [
             Attributes\IdAttribute::make(),
+            \Amethyst\Core\Attributes\DataNameAttribute::make('model')
+                ->setRequired(true)
+                ->setMutable(false),
             Attributes\TextAttribute::make('name')
                 ->setRequired(true)
                 ->setValidator(function (EntityContract $entity, $value) {
@@ -26,6 +29,10 @@ class AttributeSchema extends Schema
             Attributes\LongTextAttribute::make('description'),
             Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute.schema')))
                 ->setRequired(true),
+            Attributes\BooleanAttribute::make('required')
+                ->setDefault(function (EntityContract $entity) {
+                    return false;
+                }),
             Attributes\TextAttribute::make('regex')
                 ->setRequired(false)
                 ->setValidator(function (EntityContract $entity, $value) {
@@ -36,12 +43,6 @@ class AttributeSchema extends Schema
                     }
                 }),
             Attributes\YamlAttribute::make('options'),
-            \Amethyst\Core\Attributes\DataNameAttribute::make('model')
-                ->setRequired(true),
-            Attributes\BooleanAttribute::make('required')
-                ->setDefault(function (EntityContract $entity) {
-                    return false;
-                }),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),

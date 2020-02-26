@@ -14,13 +14,13 @@ class CreateAttributesTable extends Migration
     {
         Schema::create(Config::get('amethyst.attribute.data.attribute.table'), function (Blueprint $table) {
             $table->increments('id');
+            $table->string('model');
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('schema');
-            $table->string('regex')->nullable();
             $table->boolean('required')->default(false);
+            $table->string('regex')->nullable();
             $table->text('options')->nullable();
-            $table->string('model');
             $table->timestamps();
         });
     }
