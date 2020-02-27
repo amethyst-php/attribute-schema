@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Serializer;
 
-class AttributeSerializer extends Serializer
+class AttributeSchemaSerializer extends Serializer
 {
     /**
      * Serialize entity.

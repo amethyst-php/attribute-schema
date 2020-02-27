@@ -7,7 +7,7 @@ use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Schema;
 
-class AttributeSchema extends Schema
+class AttributeSchemaSchema extends Schema
 {
     /**
      * Get all the attributes.
@@ -27,7 +27,7 @@ class AttributeSchema extends Schema
                     return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $value);
                 }),
             Attributes\LongTextAttribute::make('description'),
-            Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute.schema')))
+            Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute-schema.schema')))
                 ->setRequired(true),
             Attributes\BooleanAttribute::make('required')
                 ->setDefault(function (EntityContract $entity) {

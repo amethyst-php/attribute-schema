@@ -1,7 +1,7 @@
 {
-    "name": "amethyst/attribute",
+    "name": "amethyst/attribute-schema",
     "type": "library",
-    "keywords": ["laravel", "amethyst", "amethyst-attribute", "attribute"],
+    "keywords": ["laravel", "amethyst", "amethyst-attribute-schema", "attribute-schema"],
     "license": "MIT",
     "require": {
         "php": ">=7.2",
@@ -25,12 +25,12 @@
     },
     "extra": {
         "amethyst": {
-            "package": "attribute",
+            "package": "attribute-schema",
             "namespace": "Railken\\Amethyst"
         },
         "laravel": {
             "providers": [
-                "Amethyst\\Providers\\AttributeServiceProvider"
+                "Amethyst\\Providers\\AttributeSchemaServiceProvider"
             ]
         }
     }

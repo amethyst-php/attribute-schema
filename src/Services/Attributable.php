@@ -14,7 +14,7 @@ class Attributable
 
     public function reload()
     {
-        $this->attributes = Models\Attribute::all();
+        $this->attributes = Models\AttributeSchema::all();
     }
 
     public function boot()
@@ -71,7 +71,7 @@ class Attributable
                 }
 
                 $attribute->boot();
-                $manager->addAttribute($attribute);
+                $manager->addAttributeSchema($attribute);
             }
         });
     }

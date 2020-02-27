@@ -12,7 +12,7 @@ use Railken\Lem\Contracts\EntityContract;
  * @property string $schema
  * @property string $options
  */
-class Attribute extends Model implements EntityContract
+class AttributeSchema extends Model implements EntityContract
 {
     use ConfigurableModel;
 
@@ -23,7 +23,7 @@ class Attribute extends Model implements EntityContract
      */
     public function __construct(array $attributes = [])
     {
-        $this->ini('amethyst.attribute.data.attribute');
+        $this->ini('amethyst.attribute-schema.data.attribute-schema');
         parent::__construct($attributes);
     }
 
@@ -34,11 +34,11 @@ class Attribute extends Model implements EntityContract
      *
      * @return Collection
      */
-    public static function internalGetAttributes(string $config): Collection
+    public static function internalGetAttributeSchemas(string $config): Collection
     {
         $schema = Config::get($config.'.schema');
         $schema = new $schema();
 
-        return collect($schema->getAttributes());
+        return collect($schema->getAttributeSchemas());
     }
 }

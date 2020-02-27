@@ -5,7 +5,7 @@ namespace Amethyst\Authorizers;
 use Railken\Lem\Authorizer;
 use Railken\Lem\Tokens;
 
-class AttributeAuthorizer extends Authorizer
+class AttributeSchemaAuthorizer extends Authorizer
 {
     /**
      * List of all permissions.

@@ -2,16 +2,16 @@
 
 namespace Amethyst\Tests\Managers;
 
-use Amethyst\Fakers\AttributeFaker;
+use Amethyst\Fakers\AttributeSchemaFaker;
 use Amethyst\Fakers\FooFaker;
-use Amethyst\Managers\AttributeManager;
+use Amethyst\Managers\AttributeSchemaManager;
 use Amethyst\Managers\FooManager;
 use Amethyst\Models\Foo;
 use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeTest extends BaseTest
+class AttributeSchemaTest extends BaseTest
 {
     use TestableBaseTrait;
 
@@ -20,18 +20,18 @@ class AttributeTest extends BaseTest
      *
      * @var string
      */
-    protected $manager = AttributeManager::class;
+    protected $manager = AttributeSchemaManager::class;
 
     /**
      * Faker class.
      *
      * @var string
      */
-    protected $faker = AttributeFaker::class;
+    protected $faker = AttributeSchemaFaker::class;
 
-    public function testDynamicAttribute()
+    public function testDynamicAttributeSchema()
     {
-        $attribute = (new AttributeManager())->createOrFail([
+        $attribute = (new AttributeSchemaManager())->createOrFail([
             'name'   => 'email',
             'schema' => 'Email',
             'model'  => 'foo',
@@ -52,9 +52,9 @@ class AttributeTest extends BaseTest
         $this->assertEquals(true, empty($foo->email));
     }
 
-    public function testEnumAttribute()
+    public function testEnumAttributeSchema()
     {
-        $attribute = (new AttributeManager())->createOrFail([
+        $attribute = (new AttributeSchemaManager())->createOrFail([
             'name'    => 'select',
             'schema'  => 'Enum',
             'model'   => 'foo',

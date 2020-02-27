@@ -6,7 +6,7 @@ use Faker\Factory;
 use Railken\Bag;
 use Railken\Lem\Faker;
 
-class AttributeFaker extends Faker
+class AttributeSchemaFaker extends Faker
 {
     /**
      * @return \Railken\Bag
@@ -16,7 +16,7 @@ class AttributeFaker extends Faker
         $faker = Factory::create();
 
         $bag = new Bag();
-        $bag->set('name', $faker->name);
+        $bag->set('name', str_replace(".", "", str_random(8).microtime(true)));
         $bag->set('description', $faker->text);
         $bag->set('schema', 'Text');
         $bag->set('regex', '/^[a-zA-Z_][a-zA-Z0-9_]*$/');

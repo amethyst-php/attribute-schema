@@ -3,10 +3,10 @@
 namespace Amethyst\Providers;
 
 use Amethyst\Core\Providers\CommonServiceProvider;
-use Amethyst\Models\Attribute;
-use Amethyst\Observers\AttributeObserver;
+use Amethyst\Models\AttributeSchema;
+use Amethyst\Observers\AttributeSchemaObserver;
 
-class AttributeServiceProvider extends CommonServiceProvider
+class AttributeSchemaServiceProvider extends CommonServiceProvider
 {
     /**
      * @inherit
@@ -27,6 +27,6 @@ class AttributeServiceProvider extends CommonServiceProvider
     {
         parent::boot();
 
-        Attribute::observe(AttributeObserver::class);
+        AttributeSchema::observe(AttributeSchemaObserver::class);
     }
 }
