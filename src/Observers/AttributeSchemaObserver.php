@@ -14,6 +14,26 @@ class AttributeSchemaObserver
      *
      * @param \Amethyst\Models\AttributeSchema $attributeSchema
      */
+    public function created(AttributeSchema $attributeSchema)
+    {
+        $this->reload($attributeSchema);
+    }
+
+    /**
+     * Handle the AttributeSchema "updated" event.
+     *
+     * @param \Amethyst\Models\AttributeSchema $attributeSchema
+     */
+    public function updated(AttributeSchema $attributeSchema)
+    {
+        $this->reload($attributeSchema);
+    }
+
+    /**
+     * Handle the AttributeSchema "created" event.
+     *
+     * @param \Amethyst\Models\AttributeSchema $attributeSchema
+     */
     public function creating(AttributeSchema $attributeSchema)
     {
         $this->updating($attributeSchema, false);
@@ -93,26 +113,6 @@ class AttributeSchemaObserver
         $class = config('amethyst.attribute-schema.schema.'.$attributeSchema->schema);
 
         return $class::make($attributeSchema->name)->getSchema();
-    }
-
-    /**
-     * Handle the AttributeSchema "created" event.
-     *
-     * @param \Amethyst\Models\AttributeSchema $attributeSchema
-     */
-    public function created(AttributeSchema $attributeSchema)
-    {
-        $this->reload($attributeSchema);
-    }
-
-    /**
-     * Handle the AttributeSchema "updated" event.
-     *
-     * @param \Amethyst\Models\AttributeSchema $attributeSchema
-     */
-    public function updated(AttributeSchema $attributeSchema)
-    {
-        $this->reload($attributeSchema);
     }
 
     public function reload(AttributeSchema $attributeSchema)

@@ -19,7 +19,7 @@ class Attributable
 
     public function boot()
     {
-        if (!Schema::hasTable(Config::get('amethyst.attribute.data.attribute.table'))) {
+        if (!Schema::hasTable(Config::get('amethyst.attribute-schema.data.attribute-schema.table'))) {
             return;
         }
 
@@ -33,7 +33,7 @@ class Attributable
             $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === $name; });
 
             foreach ($attributes as $attributeRaw) {
-                $class = config('amethyst.attribute.schema.'.$attributeRaw->schema);
+                $class = config('amethyst.attribute-schema.schema.'.$attributeRaw->schema);
                 $attribute = $class::make($attributeRaw->name)->setManager($manager);
 
                 $attribute->setRequired($attributeRaw->required);
@@ -71,7 +71,7 @@ class Attributable
                 }
 
                 $attribute->boot();
-                $manager->addAttributeSchema($attribute);
+                $manager->addAttribute($attribute);
             }
         });
     }
