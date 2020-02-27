@@ -23,7 +23,7 @@ class AttributeSchemaObserver
      * Handle the AttributeSchema "updated" event.
      *
      * @param \Amethyst\Models\AttributeSchema $attributeSchema
-     * @param bool                       $onChange
+     * @param bool                             $onChange
      */
     public function updating(AttributeSchema $attributeSchema, bool $onChange = true)
     {
