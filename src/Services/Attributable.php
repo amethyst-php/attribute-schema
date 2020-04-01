@@ -26,11 +26,12 @@ class Attributable
         $this->reload();
 
         Manager::listen('boot', function ($data) {
+
             $manager = $data->manager;
 
             $name = $manager->getName();
 
-            $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === $name; });
+            $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === strtolower($name); });
 
             foreach ($attributes as $attributeRaw) {
                 $class = config('amethyst.attribute-schema.schema.'.$attributeRaw->schema);
@@ -71,6 +72,7 @@ class Attributable
                 }
 
                 $attribute->boot();
+
                 $manager->addAttribute($attribute);
             }
         });
