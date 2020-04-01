@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'table'      => 'attribute',
+    'table'      => 'attribute_schema',
     'comment'    => 'AttributeSchema',
     'model'      => Amethyst\Models\AttributeSchema::class,
     'schema'     => Amethyst\Schemas\AttributeSchemaSchema::class,
