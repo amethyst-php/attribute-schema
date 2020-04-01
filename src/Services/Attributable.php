@@ -26,7 +26,6 @@ class Attributable
         $this->reload();
 
         Manager::listen('boot', function ($data) {
-
             $manager = $data->manager;
 
             $name = $manager->getName();
