@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Railken\Lem\Manager;
 use Symfony\Component\Yaml\Yaml;
+use Amethyst\Exceptions\AttributeSchemaPayloadInvalidException;
 
 class Attributable
 {
@@ -33,6 +34,7 @@ class Attributable
             $attributes = $this->attributes->filter(function ($attribute) use ($name) { return $attribute->model === strtolower($name); });
 
             foreach ($attributes as $attributeRaw) {
+
                 $class = config('amethyst.attribute-schema.schema.'.$attributeRaw->schema);
                 $attribute = $class::make($attributeRaw->name)->setManager($manager);
 
@@ -47,16 +49,24 @@ class Attributable
                 }
 
                 if (!empty($options)) {
-                    if (!empty($options->relationName)) {
+
+                    if ($attributeRaw->schema === 'BelongsTo') {
+                        if (empty($options->relationName) || empty($options->relationData)) {
+                            throw new AttributeSchemaPayloadInvalidException($attributeRaw);
+                        }
+
                         $attribute->setRelationName($options->relationName);
-                    }
-
-                    if (!empty($options->relationData)) {
                         $attribute->setRelationManager(app('amethyst')->findManagerByName($options->relationData));
+                        
                     }
 
-                    if (!empty($options->options)) {
+                    if ($attributeRaw->schema === 'Enum') {
+                        if (empty($options->options)) {
+                            throw new AttributeSchemaPayloadInvalidException($attributeRaw);
+                        }
+                        
                         $attribute->setOptions($options->options);
+                        
                     }
 
                     if ($attributeRaw->schema === 'Number') {
