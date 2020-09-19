@@ -16,7 +16,7 @@ class AttributeSchemaFaker extends Faker
         $faker = Factory::create();
 
         $bag = new Bag();
-        $bag->set('name', str_replace('.', '', str_random(8).microtime(true)));
+        $bag->set('name', "F".str_replace('.', '', str_random(8).microtime(true)));
         $bag->set('description', $faker->text);
         $bag->set('schema', 'Text');
         $bag->set('regex', '/^[a-zA-Z_][a-zA-Z0-9_]*$/');
