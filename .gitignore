@@ -5,3 +5,5 @@ var/
 composer\.lock
 build/
 phpunit\.xml
+
+.phpunit.result.cache
