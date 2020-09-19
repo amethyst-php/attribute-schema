@@ -30,5 +30,8 @@ class AttributeSchemaRequiredTest extends AttributeSchemaCommonTest
         $this->assertEquals('FOO_FIELD_REQUIRED_NOT_DEFINED', $result->getSimpleErrors()[0]['code']);
         
         $attribute->delete();
+
+        // Ensure that attribute has been eliminated
+        $this->assertEquals(7, (new FooManager())->getAttributes()->count());
     }
 }
