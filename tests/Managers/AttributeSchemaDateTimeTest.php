@@ -11,22 +11,10 @@ use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaTest extends BaseTest
+class AttributeSchemaDateTimeTest extends AttributeSchemaCommonTest
 {
-    use TestableBaseTrait;
-
-    /**
-     * Manager class.
-     *
-     * @var string
-     */
-    protected $manager = AttributeSchemaManager::class;
-
-    /**
-     * Faker class.
-     *
-     * @var string
-     */
-    protected $faker = AttributeSchemaFaker::class;
-
+    public function testBasicDateTime()
+    {
+        $this->commonField('datetime', 'DateTime', ['2010-10-10 10:20:40'], ['not date']);
+    }
 }

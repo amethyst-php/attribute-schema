@@ -11,22 +11,10 @@ use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaTest extends BaseTest
+class AttributeSchemaEmailTest extends AttributeSchemaCommonTest
 {
-    use TestableBaseTrait;
-
-    /**
-     * Manager class.
-     *
-     * @var string
-     */
-    protected $manager = AttributeSchemaManager::class;
-
-    /**
-     * Faker class.
-     *
-     * @var string
-     */
-    protected $faker = AttributeSchemaFaker::class;
-
+    public function testBasicEmail()
+    {
+        $this->commonField('email', 'Email', ['test@test.net'], ['not_email']);
+    }
 }

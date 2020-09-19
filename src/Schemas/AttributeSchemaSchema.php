@@ -27,7 +27,7 @@ class AttributeSchemaSchema extends Schema
                     return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $value);
                 }),
             Attributes\LongTextAttribute::make('description'),
-            Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute-schema.schema')))
+            Attributes\EnumAttribute::make('schema', array_keys(Config::get('amethyst.attribute-schema.resolvers')))
                 ->setRequired(true),
             Attributes\BooleanAttribute::make('required')
                 ->setDefault(function (EntityContract $entity) {
@@ -42,7 +42,11 @@ class AttributeSchemaSchema extends Schema
                         return false;
                     }
                 }),
-            Attributes\YamlAttribute::make('options'),
+            Attributes\YamlAttribute::make('options')
+                ->setValidator(function (EntityContract $entity, $value) {
+                    $options = (object) Yaml::parse((string) $attributeRaw->options);
+
+                }),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),

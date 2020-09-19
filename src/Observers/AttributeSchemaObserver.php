@@ -63,25 +63,13 @@ class AttributeSchemaObserver
         Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attributeSchema, $onChange, $options) {
             $method = $this->getMethod($attributeSchema);
 
-            $arguments = [$attributeSchema->name];
-
-            if ($attributeSchema->schema === 'Number') {
-                if (!empty($options->precision)) {
-                    $arguments[] = $options->precision;
-                }
-
-                if (!empty($options->scale)) {
-                    $arguments[] = $options->scale;
-                }
-            }
+            $arguments = $attributeSchema->getResolver()->getDatabaseArguments();
 
             $column = $table->$method(...$arguments);
 
-            if ($attributeSchema->schema === 'BelongsTo') {
-                $column->unsigned();
-            }
+            $attributeSchema->getResolver()->callDatabaseOptions($column);
 
-            $column->nullable();
+            $column = $column->nullable();
 
             if ($onChange) {
                 $column->change();
@@ -110,9 +98,7 @@ class AttributeSchemaObserver
      */
     public function getMethod(AttributeSchema $attributeSchema): string
     {
-        $class = config('amethyst.attribute-schema.schema.'.$attributeSchema->schema);
-
-        return $class::make($attributeSchema->name)->getSchema();
+        return $attributeSchema->getResolver()->getInstanceAttribute()->getSchema();
     }
 
     public function reload(AttributeSchema $attributeSchema)

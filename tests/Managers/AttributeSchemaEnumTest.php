@@ -11,22 +11,16 @@ use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaTest extends BaseTest
+class AttributeSchemaEnumTest extends AttributeSchemaCommonTest
 {
-    use TestableBaseTrait;
-
-    /**
-     * Manager class.
-     *
-     * @var string
-     */
-    protected $manager = AttributeSchemaManager::class;
-
-    /**
-     * Faker class.
-     *
-     * @var string
-     */
-    protected $faker = AttributeSchemaFaker::class;
-
+    public function testBasicEnum()
+    {
+        $this->commonField('select', 'Enum', [1, 2, 3], [0, '3', 4], Yaml::dump([
+            'options' => [
+                1,
+                2,
+                3,
+            ],
+        ]));
+    }
 }
