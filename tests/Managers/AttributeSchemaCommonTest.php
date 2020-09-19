@@ -47,5 +47,8 @@ abstract class AttributeSchemaCommonTest extends BaseTest
         $foo = Foo::find($foo->id);
 
         $this->assertEquals(true, empty($foo->$name));
+
+        // Ensure that attribute has been eliminated
+        $this->assertEquals(7, (new FooManager())->getAttributes()->count());
     }
 }

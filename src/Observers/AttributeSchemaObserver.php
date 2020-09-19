@@ -78,7 +78,7 @@ class AttributeSchemaObserver
     }
 
     /**
-     * Handle the AttributeSchema "deleted" event.
+     * Handle the AttributeSchema "deleting" event.
      *
      * @param \Amethyst\Models\AttributeSchema $attributeSchema
      */
@@ -89,6 +89,16 @@ class AttributeSchemaObserver
         Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attributeSchema) {
             $column = $table->dropColumn($attributeSchema->name);
         });
+    }
+
+    /**
+     * Handle the AttributeSchema "deleted" event.
+     *
+     * @param \Amethyst\Models\AttributeSchema $attributeSchema
+     */
+    public function deleted(AttributeSchema $attributeSchema)
+    {
+        $this->reload($attributeSchema);
     }
 
     /**
