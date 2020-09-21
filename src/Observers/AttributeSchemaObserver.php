@@ -75,6 +75,10 @@ class AttributeSchemaObserver
                 $column->change();
             }
         });
+
+        if ($attributeSchema->schema === 'BelongsTo') {
+            $this->syncRelationSchema($attributeSchema);
+        }
     }
 
     /**
@@ -113,7 +117,7 @@ class AttributeSchemaObserver
 
     public function reload(AttributeSchema $attributeSchema)
     {
-        app('amethyst.attributable')->reload();
+        app('amethyst.attribute-schema')->reload();
 
         $data = app('amethyst')->findDataByName($attributeSchema->model);
 
@@ -127,4 +131,77 @@ class AttributeSchemaObserver
 
         event(new \Railken\EloquentMapper\Events\EloquentMapUpdate($attributeSchema->model));
     }
+
+     /**
+     * Sync with Relation schema for attributes BelongsTo and MorphTo
+     *
+     * @param \Amethyst\Models\AttributeSchema $attributeSchema
+     */
+    public function syncRelationSchema(AttributeSchema $attributeSchema)
+    {
+        $newOptions = (object) Yaml::parse($attributeSchema->options);
+        $originalOptions = (object) Yaml::parse(
+            $attributeSchema->getOriginal()['options'] 
+            ?? Yaml::dump([
+                'relationName' => $newOptions->relationName,
+                'relationData' => null // force create
+        ]));
+
+        $newRelationName = $newOptions->relationName;
+        $oldRelationName = $originalOptions->relationName;
+
+        $this->renameRelationSchemaIfRequired(
+            $attributeSchema,
+            $originalOptions->relationName,
+            $newOptions->relationName
+        );
+
+        $this->changeTargetRelationSchemaIfRequired(
+            $attributeSchema,
+            $newOptions->relationName,
+            $originalOptions->relationData,
+            $newOptions->relationData
+        );
+
+    }
+
+    public function renameRelationSchemaIfRequired(AttributeSchema $attributeSchema, $oldRelationName, $newRelationName)
+    {
+        if ($oldRelationName === $newRelationName) {
+            return;
+        }
+
+        $relation = app('amethyst')->get('relation-schema')->getRepository()->findOneBy([
+            'data' => $attributeSchema->model,
+            'name' => $oldRelationName,
+        ]);
+
+        $relation->name = $newRelationName;
+        $relation->save();
+    }
+
+    public function changeTargetRelationSchemaIfRequired(AttributeSchema $attributeSchema, $relationName, $oldRelationTarget, $newRelationTarget)
+    {
+        if ($oldRelationTarget === $newRelationTarget) {
+            return;
+        }
+
+        $relation = app('amethyst')->get('relation-schema')->getRepository()->findOneBy([
+            'data' => $attributeSchema->model,
+            'name' => $relationName
+        ]);
+
+        if ($relation) {
+            $relation->payload = Yaml::dump(['target' => $newRelationTarget]);
+            $relation->save();
+        } else {
+            app('amethyst')->get('relation-schema')->createOrFail([
+                'data' => $attributeSchema->model,
+                'name' => $relationName,
+                'type' => $attributeSchema->schema,
+                'payload' => Yaml::dump(['target' => $newRelationTarget])
+            ]);
+        }
+    }
+
 }

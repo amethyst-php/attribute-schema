@@ -2,7 +2,6 @@
 
 namespace Amethyst\AttributeSchemaResolvers;
 
-use Railken\Lem\Attributes\TextAttribute as BaseAttribute;
 use Amethyst\Exceptions\AttributeSchemaPayloadInvalidException;
 use Railken\Lem\Attributes\BaseAttribute;
 

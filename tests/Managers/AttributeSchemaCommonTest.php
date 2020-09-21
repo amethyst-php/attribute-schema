@@ -29,7 +29,7 @@ abstract class AttributeSchemaCommonTest extends BaseTest
             $foo->save();
 
             $foo = Foo::find($foo->id);
-            
+
             $this->assertEquals($v, $foo->toArray()[$name]);
         }
 

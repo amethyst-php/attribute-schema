@@ -15,9 +15,10 @@ class AttributeSchemaServiceProvider extends CommonServiceProvider
     {
         parent::register();
 
-        $this->app->singleton('amethyst.attributable', function ($app) {
+        $this->app->singleton('amethyst.attribute-schema', function ($app) {
             return new \Amethyst\Services\Attributable();
         });
+        $this->app->register(\Amethyst\Providers\RelationSchemaServiceProvider::class);
     }
 
     /**
