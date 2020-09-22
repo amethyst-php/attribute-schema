@@ -10,4 +10,6 @@ return [
     'BelongsTo' => Amethyst\AttributeSchemaResolvers\BelongsToResolver::class,
     'Date'      => Amethyst\AttributeSchemaResolvers\DateResolver::class,
     'DateTime'  => Amethyst\AttributeSchemaResolvers\DateTimeResolver::class,
+    'DataName'  => Amethyst\AttributeSchemaResolvers\DataNameResolver::class,
+    'MorphTo'  => Amethyst\AttributeSchemaResolvers\MorphToResolver::class,
 ];

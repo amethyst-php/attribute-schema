@@ -47,6 +47,9 @@ class AttributeSchemaSchema extends Schema
                     $options = (object) Yaml::parse((string) $attributeRaw->options);
 
                 }),
+            Attributes\TextAttribute::make('require')
+                ->setFillable(false)
+                ->setMutable(false),
             Attributes\CreatedAtAttribute::make(),
             Attributes\UpdatedAtAttribute::make(),
             Attributes\DeletedAtAttribute::make(),

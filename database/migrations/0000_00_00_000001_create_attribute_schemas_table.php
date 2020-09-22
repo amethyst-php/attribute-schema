@@ -21,6 +21,7 @@ class CreateAttributeSchemasTable extends Migration
             $table->boolean('required')->default(false);
             $table->string('regex')->nullable();
             $table->text('options')->nullable();
+            $table->text('require')->nullable();
             $table->timestamps();
         });
     }

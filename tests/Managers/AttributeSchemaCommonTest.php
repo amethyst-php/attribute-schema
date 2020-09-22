@@ -13,7 +13,14 @@ use Symfony\Component\Yaml\Yaml;
 
 abstract class AttributeSchemaCommonTest extends BaseTest
 {
-    public function commonField($name, $type, $valid = [], $invalid = [], $options = '')
+    public function resetFields()
+    {
+        \Amethyst\Models\AttributeSchema::all()->map(function ($i) {
+            return $i->delete();
+        });
+    }
+
+    public function commonField($name, $type, $valid = [], $invalid = [], $options = '', $delete = true)
     {
         $attribute = (new AttributeSchemaManager())->createOrFail([
             'name'   => $name,
@@ -23,14 +30,27 @@ abstract class AttributeSchemaCommonTest extends BaseTest
         ])->getResource();
         $fooManager = new FooManager();
 
+        $resources = [];
+
         foreach ($valid as $v) {
-            $foo = $fooManager->createOrFail(FooFaker::make()->parameters())->getResource();
-            $foo->fill([$name => $v]);
+
+            $parameters = FooFaker::make()->parameters();
+            $parameters->add(is_array($v) ? $v : [$name => $v]);
+
+            $foo = $fooManager->createOrFail($parameters)->getResource();
             $foo->save();
 
             $foo = Foo::find($foo->id);
 
-            $this->assertEquals($v, $foo->toArray()[$name]);
+            $resources[] = $foo;
+
+            if (is_array($v)) {
+                foreach ($v as $k => $i) {
+                    $this->assertEquals($i, $foo->toArray()[$k]);
+                }
+            } else {
+                $this->assertEquals($v, $foo->toArray()[$name]);
+            }
         }
 
         foreach ($invalid as $v) {
@@ -43,12 +63,6 @@ abstract class AttributeSchemaCommonTest extends BaseTest
             $this->assertEquals(sprintf('FOO_%s_NOT_VALID', strtoupper($name)), $result->getSimpleErrors()[0]['code']);
         }
 
-        $attribute->delete();
-        $foo = Foo::find($foo->id);
-
-        $this->assertEquals(true, empty($foo->$name));
-
-        // Ensure that attribute has been eliminated
-        $this->assertEquals(7, (new FooManager())->getAttributes()->count());
+        return $resources;
     }
 }

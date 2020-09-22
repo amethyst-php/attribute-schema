@@ -39,4 +39,9 @@ class Attributable
             }
         });
     }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }

@@ -11,13 +11,13 @@ use Amethyst\Tests\BaseTest;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaDateTest extends AttributeSchemaCommonTest
+class AttributeSchemaDataNameTest extends AttributeSchemaCommonTest
 {
     public function testBasicDate()
     {
         $this->resetFields();
         
-        $this->commonField('date', 'Date', ['2010-10-10']);
+        $this->commonField('data', 'DataName', ['foo'], ['invalidName']);
         
         $this->resetFields();
     }

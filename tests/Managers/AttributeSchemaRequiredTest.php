@@ -15,6 +15,8 @@ class AttributeSchemaRequiredTest extends AttributeSchemaCommonTest
 {
     public function testRequired()
     {
+        $this->resetFields();
+
         $attribute = (new AttributeSchemaManager())->createOrFail([
             'name'   => 'field_required',
             'schema' => 'Number',
@@ -27,11 +29,8 @@ class AttributeSchemaRequiredTest extends AttributeSchemaCommonTest
         $parameters = FooFaker::make()->parameters();
         $result = $fooManager->create($parameters);
 
-        $this->assertEquals('FOO_FIELD_REQUIRED_NOT_DEFINED', $result->getSimpleErrors()[0]['code']);
-        
-        $attribute->delete();
+        $this->assertEquals('FOO_FIELD_REQUIRED_NOT_DEFINED', $result->getSimpleErrors()[0]['code']); 
 
-        // Ensure that attribute has been eliminated
-        $this->assertEquals(7, (new FooManager())->getAttributes()->count());
+        $this->resetFields();
     }
 }

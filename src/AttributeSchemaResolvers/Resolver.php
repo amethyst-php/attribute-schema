@@ -6,6 +6,7 @@ use Amethyst\Models\AttributeSchema;
 use Railken\Lem\Attributes\BaseAttribute;
 use Symfony\Component\Yaml\Yaml;
 use Railken\Lem\Contracts\ManagerContract;
+use Amethyst\Exceptions\RequireDependencyException;
 
 /**
  * Handle all information conversion from AttributeSchema to BaseAttribute
@@ -72,9 +73,9 @@ abstract class Resolver
     public function boot(ManagerContract $manager)
     {
         $attribute = $this->getInstanceAttribute();
-        $this->loadInstanceAttribute($attribute);
         $attribute->setManager($manager);
         $manager->addAttribute($attribute);
+        $this->loadInstanceAttribute($attribute);
     }
 
     /**
@@ -145,4 +146,33 @@ abstract class Resolver
     {
         return [$this->attributeSchema->name];
     }
+
+    /**
+     * Called when an attribute is deleting
+     */
+    public function deleting()
+    {
+        app('amethyst.attribute-schema')->getAttributes()->where('data', $this->attributeSchema->data)->filter(function ($i) {
+
+            if (in_array($this->attributeSchema->name, explode(",", $i->require))) {
+                
+                throw new RequireDependencyException(sprintf(
+                    "You cannot delete `%s`, because `%s` requires it function.", 
+                    $this->attributeSchema->name,
+                    $i->name
+                ));
+            }
+        });
+
+        // ..
+    }
+
+    /**
+     * Called when an attribute is saving
+     */
+    public function saving()
+    {
+        // ..
+    }
+
 }

@@ -40,6 +40,16 @@ class AttributeSchemaObserver
     }
 
     /**
+     * Handle the AttributeSchema "saving" event.
+     *
+     * @param \Amethyst\Models\AttributeSchema $attributeSchema
+     */
+    public function saving(AttributeSchema $attributeSchema)
+    {
+        $attributeSchema->getResolver()->saving();
+    }
+
+    /**
      * Handle the AttributeSchema "updated" event.
      *
      * @param \Amethyst\Models\AttributeSchema $attributeSchema
@@ -76,7 +86,7 @@ class AttributeSchemaObserver
             }
         });
 
-        if ($attributeSchema->schema === 'BelongsTo') {
+        if ($attributeSchema->schema === 'BelongsTo' || $attributeSchema->schema === 'MorphTo') {
             $this->syncRelationSchema($attributeSchema);
         }
     }
@@ -88,6 +98,8 @@ class AttributeSchemaObserver
      */
     public function deleting(AttributeSchema $attributeSchema)
     {
+        $attributeSchema->getResolver()->deleting();
+
         $data = app('amethyst')->findDataByName($attributeSchema->model);
 
         Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attributeSchema) {
@@ -142,10 +154,8 @@ class AttributeSchemaObserver
         $newOptions = (object) Yaml::parse($attributeSchema->options);
         $originalOptions = (object) Yaml::parse(
             $attributeSchema->getOriginal()['options'] 
-            ?? Yaml::dump([
-                'relationName' => $newOptions->relationName,
-                'relationData' => null // force create
-        ]));
+            ?? Yaml::dump(['relationName' => $newOptions->relationName])
+        );
 
         $newRelationName = $newOptions->relationName;
         $oldRelationName = $originalOptions->relationName;
@@ -156,11 +166,11 @@ class AttributeSchemaObserver
             $newOptions->relationName
         );
 
-        $this->changeTargetRelationSchemaIfRequired(
+        $this->changePayloadSchemaIfRequired(
             $attributeSchema,
             $newOptions->relationName,
-            $originalOptions->relationData,
-            $newOptions->relationData
+            $originalOptions,
+            $newOptions
         );
 
     }
@@ -180,9 +190,9 @@ class AttributeSchemaObserver
         $relation->save();
     }
 
-    public function changeTargetRelationSchemaIfRequired(AttributeSchema $attributeSchema, $relationName, $oldRelationTarget, $newRelationTarget)
+    public function changePayloadSchemaIfRequired(AttributeSchema $attributeSchema, $relationName, $oldPayload, $newPayload)
     {
-        if ($oldRelationTarget === $newRelationTarget) {
+        if ($oldPayload === $newPayload) {
             return;
         }
 
@@ -192,16 +202,37 @@ class AttributeSchemaObserver
         ]);
 
         if ($relation) {
-            $relation->payload = Yaml::dump(['target' => $newRelationTarget]);
+            $relation->payload = $this->convertAttributeOptionsToRelationPayload($attributeSchema, $newPayload);
             $relation->save();
         } else {
             app('amethyst')->get('relation-schema')->createOrFail([
                 'data' => $attributeSchema->model,
                 'name' => $relationName,
                 'type' => $attributeSchema->schema,
-                'payload' => Yaml::dump(['target' => $newRelationTarget])
+                'payload' => $this->convertAttributeOptionsToRelationPayload($attributeSchema, $newPayload)
             ]);
         }
+    }
+
+    public function convertAttributeOptionsToRelationPayload(AttributeSchema $attributeSchema, $payload)
+    {
+        $obj = [];
+
+        if ($attributeSchema->schema === 'BelongsTo') {
+            if (!empty($payload->relationData)) {
+                $obj['target'] = $payload->relationData;
+            }
+        }
+
+        if (!empty($payload->relationKey)) {
+            $obj['foreignKey'] = $payload->relationKey;
+        }
+
+        if (!empty($payload->ownerKey)) {
+            $obj['ownerKey'] = $payload->ownerKey;
+        }
+
+        return Yaml::dump($obj);
     }
 
 }

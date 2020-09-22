@@ -15,6 +15,8 @@ class AttributeSchemaBelongsToTest extends AttributeSchemaCommonTest
 {
     public function testBasicBelongsTo()
     {	
+        $this->resetFields();
+        
     	$fooManager = new FooManager();
 		$foo = $fooManager->createOrFail(FooFaker::make()->parameters())->getResource();
         
@@ -22,5 +24,7 @@ class AttributeSchemaBelongsToTest extends AttributeSchemaCommonTest
         	'relationName' => 'parent',
         	'relationData' => 'foo'
         ]));
+
+        $this->resetFields();
     }
 }

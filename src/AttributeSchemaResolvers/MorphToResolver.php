@@ -38,14 +38,13 @@ class MorphToResolver extends Resolver
         if (empty($keyAttribute)) {
             throw new AttributeSchemaPayloadInvalidException(
                 $this->attributeSchema,
-                "The parameter `relationKey:%s` is invalid. Create first an attribute with this name or change the current value."
+                sprintf("The parameter `relationKey:%s` is invalid. Create first an attribute with this name or change the current value.", $options->relationKey)
             );
         }
 
         $attribute->setRelationName($options->relationName);
         $attribute->setRelationKey($options->relationKey);
         $attribute->setRelations(app('amethyst')->getDataManagers());
-
     }
 
     public function callDatabaseOptions($column)
@@ -57,4 +56,11 @@ class MorphToResolver extends Resolver
     {
 
     }
+
+    // Dependencies on same field
+    public function saving()
+    {
+        $this->attributeSchema->require = implode(",", [$this->getOptions()->relationKey]);
+    }
+
 }
