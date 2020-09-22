@@ -8,7 +8,7 @@ use Railken\Lem\Attributes\BaseAttribute;
 class MorphToResolver extends Resolver
 {
     /**
-     * Return \Railken\Lem\Attribute\BaseAttribute class
+     * Return \Railken\Lem\Attribute\BaseAttribute class.
      *
      * @return string
      */
@@ -18,10 +18,10 @@ class MorphToResolver extends Resolver
     }
 
     /**
-     * Load additional options for the attribute
+     * Load additional options for the attribute.
      *
      * @param BaseAttribute $attribute
-     * @param \stdClass $options
+     * @param \stdClass     $options
      *
      * @return void
      */
@@ -36,10 +36,7 @@ class MorphToResolver extends Resolver
         });
 
         if (empty($keyAttribute)) {
-            throw new AttributeSchemaPayloadInvalidException(
-                $this->attributeSchema,
-                sprintf("The parameter `relationKey:%s` is invalid. Create first an attribute with this name or change the current value.", $options->relationKey)
-            );
+            throw new AttributeSchemaPayloadInvalidException($this->attributeSchema, sprintf('The parameter `relationKey:%s` is invalid. Create first an attribute with this name or change the current value.', $options->relationKey));
         }
 
         $attribute->setRelationName($options->relationName);
@@ -54,13 +51,11 @@ class MorphToResolver extends Resolver
 
     public function validate()
     {
-
     }
 
     // Dependencies on same field
     public function saving()
     {
-        $this->attributeSchema->require = implode(",", [$this->getOptions()->relationKey]);
+        $this->attributeSchema->require = implode(',', [$this->getOptions()->relationKey]);
     }
-
 }

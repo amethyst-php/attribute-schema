@@ -8,7 +8,7 @@ use Railken\Lem\Attributes\BaseAttribute;
 class BelongsToResolver extends Resolver
 {
     /**
-     * Return \Railken\Lem\Attribute\BaseAttribute class
+     * Return \Railken\Lem\Attribute\BaseAttribute class.
      *
      * @return string
      */
@@ -18,10 +18,10 @@ class BelongsToResolver extends Resolver
     }
 
     /**
-     * Load additional options for the attribute
+     * Load additional options for the attribute.
      *
      * @param BaseAttribute $attribute
-     * @param \stdClass $options
+     * @param \stdClass     $options
      *
      * @return void
      */
@@ -42,6 +42,5 @@ class BelongsToResolver extends Resolver
 
     public function validate()
     {
-
     }
 }

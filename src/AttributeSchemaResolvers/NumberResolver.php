@@ -2,13 +2,12 @@
 
 namespace Amethyst\AttributeSchemaResolvers;
 
-use Amethyst\Exceptions\AttributeSchemaPayloadInvalidException;
 use Railken\Lem\Attributes\BaseAttribute;
 
 class NumberResolver extends Resolver
 {
     /**
-     * Return \Railken\Lem\Attributes\BaseAttribute class
+     * Return \Railken\Lem\Attributes\BaseAttribute class.
      *
      * @return string
      */
@@ -18,10 +17,10 @@ class NumberResolver extends Resolver
     }
 
     /**
-     * Load additional options for the attribute
+     * Load additional options for the attribute.
      *
      * @param BaseAttribute $attribute
-     * @param \stdClass $options
+     * @param \stdClass     $options
      *
      * @return void
      */
@@ -55,6 +54,5 @@ class NumberResolver extends Resolver
 
     public function validate()
     {
-
     }
 }

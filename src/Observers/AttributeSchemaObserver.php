@@ -144,8 +144,8 @@ class AttributeSchemaObserver
         event(new \Railken\EloquentMapper\Events\EloquentMapUpdate($attributeSchema->model));
     }
 
-     /**
-     * Sync with Relation schema for attributes BelongsTo and MorphTo
+    /**
+     * Sync with Relation schema for attributes BelongsTo and MorphTo.
      *
      * @param \Amethyst\Models\AttributeSchema $attributeSchema
      */
@@ -153,7 +153,7 @@ class AttributeSchemaObserver
     {
         $newOptions = (object) Yaml::parse($attributeSchema->options);
         $originalOptions = (object) Yaml::parse(
-            $attributeSchema->getOriginal()['options'] 
+            $attributeSchema->getOriginal()['options']
             ?? Yaml::dump(['relationName' => $newOptions->relationName])
         );
 
@@ -172,7 +172,6 @@ class AttributeSchemaObserver
             $originalOptions,
             $newOptions
         );
-
     }
 
     public function renameRelationSchemaIfRequired(AttributeSchema $attributeSchema, $oldRelationName, $newRelationName)
@@ -198,7 +197,7 @@ class AttributeSchemaObserver
 
         $relation = app('amethyst')->get('relation-schema')->getRepository()->findOneBy([
             'data' => $attributeSchema->model,
-            'name' => $relationName
+            'name' => $relationName,
         ]);
 
         if ($relation) {
@@ -206,10 +205,10 @@ class AttributeSchemaObserver
             $relation->save();
         } else {
             app('amethyst')->get('relation-schema')->createOrFail([
-                'data' => $attributeSchema->model,
-                'name' => $relationName,
-                'type' => $attributeSchema->schema,
-                'payload' => $this->convertAttributeOptionsToRelationPayload($attributeSchema, $newPayload)
+                'data'    => $attributeSchema->model,
+                'name'    => $relationName,
+                'type'    => $attributeSchema->schema,
+                'payload' => $this->convertAttributeOptionsToRelationPayload($attributeSchema, $newPayload),
             ]);
         }
     }
@@ -234,5 +233,4 @@ class AttributeSchemaObserver
 
         return Yaml::dump($obj);
     }
-
 }

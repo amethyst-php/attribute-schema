@@ -2,27 +2,27 @@
 
 namespace Amethyst\AttributeSchemaResolvers;
 
+use Amethyst\Exceptions\RequireDependencyException;
 use Amethyst\Models\AttributeSchema;
 use Railken\Lem\Attributes\BaseAttribute;
-use Symfony\Component\Yaml\Yaml;
 use Railken\Lem\Contracts\ManagerContract;
-use Amethyst\Exceptions\RequireDependencyException;
+use Symfony\Component\Yaml\Yaml;
 
 /**
- * Handle all information conversion from AttributeSchema to BaseAttribute
+ * Handle all information conversion from AttributeSchema to BaseAttribute.
  */
 abstract class Resolver
 {
     /**
      * Instance of model AttributeSchema, used to retrieve all information
-     * to create an instance of \Railken\Lem\Attributes\BaseAttribute
+     * to create an instance of \Railken\Lem\Attributes\BaseAttribute.
      *
-     * @var AttributeSchema 
+     * @var AttributeSchema
      */
     protected $attributeSchema;
 
     /**
-     * Create a new instance
+     * Create a new instance.
      *
      * @param AttributeSchema $attributeSchema
      */
@@ -32,25 +32,26 @@ abstract class Resolver
     }
 
     /**
-     * Return \Railken\Lem\Attributes\TextAttribute class
+     * Return \Railken\Lem\Attributes\TextAttribute class.
      *
      * @return string
      */
     abstract public function getSchemaClass(): string;
 
     /**
-     * Create a new instance of BaseAttribute
+     * Create a new instance of BaseAttribute.
      *
      * @return BaseAttribute
      */
     public function getInstanceAttribute(): BaseAttribute
     {
         $class = $this->getSchemaClass();
+
         return $class::make($this->attributeSchema->name);
     }
 
     /**
-     * Load some information into $attribute
+     * Load some information into $attribute.
      *
      * @param BaseAttribute $attribute
      *
@@ -66,7 +67,7 @@ abstract class Resolver
     }
 
     /**
-     * Create a new attribute, boot it and add to the manager
+     * Create a new attribute, boot it and add to the manager.
      *
      * @param ManagerContract $manager
      */
@@ -79,7 +80,64 @@ abstract class Resolver
     }
 
     /**
-     * Retrieve custom options from $attributeSchema
+     * Load additional options for the attribute.
+     *
+     * @param BaseAttribute $attribute
+     * @param \stdClass     $options
+     *
+     * @return void
+     */
+    public function loadOptions(BaseAttribute $attribute, \stdClass $options)
+    {
+        // ..
+    }
+
+    /**
+     * Attach custom options to the $column
+     * when migrating the database.
+     *
+     * @param $column
+     */
+    public function callDatabaseOptions($column)
+    {
+        // ..
+    }
+
+    /**
+     * Retrieve the basic arguments when creating the $colum instance
+     * for the migration of the database.
+     *
+     * @return array
+     */
+    public function getDatabaseArguments(): array
+    {
+        return [$this->attributeSchema->name];
+    }
+
+    /**
+     * Called when an attribute is deleting.
+     */
+    public function deleting()
+    {
+        app('amethyst.attribute-schema')->getAttributes()->where('data', $this->attributeSchema->data)->filter(function ($i) {
+            if (in_array($this->attributeSchema->name, explode(',', $i->require), true)) {
+                throw new RequireDependencyException(sprintf('You cannot delete `%s`, because `%s` requires it function.', $this->attributeSchema->name, $i->name));
+            }
+        });
+
+        // ..
+    }
+
+    /**
+     * Called when an attribute is saving.
+     */
+    public function saving()
+    {
+        // ..
+    }
+
+    /**
+     * Retrieve custom options from $attributeSchema.
      *
      * @return \stdClass
      */
@@ -89,7 +147,7 @@ abstract class Resolver
     }
 
     /**
-     * Load the required flag into $attribute
+     * Load the required flag into $attribute.
      *
      * @param BaseAttribute $attribute
      */
@@ -99,7 +157,7 @@ abstract class Resolver
     }
 
     /**
-     * Load regex configuration into $attribute
+     * Load regex configuration into $attribute.
      *
      * @param BaseAttribute $attribute
      */
@@ -111,68 +169,4 @@ abstract class Resolver
             });
         }
     }
-
-    /**
-     * Load additional options for the attribute
-     *
-     * @param BaseAttribute $attribute
-     * @param \stdClass $options
-     *
-     * @return void
-     */
-    public function loadOptions(BaseAttribute $attribute, \stdClass $options)
-    {
-        // ..
-    }
-
-    /**
-     * Attach custom options to the $column 
-     * when migrating the database
-     *
-     * @param $column
-     */
-    public function callDatabaseOptions($column)
-    {
-        // ..
-    }
-
-    /**
-     * Retrieve the basic arguments when creating the $colum instance 
-     * for the migration of the database
-     *
-     * @return array
-     */
-    public function getDatabaseArguments(): array
-    {
-        return [$this->attributeSchema->name];
-    }
-
-    /**
-     * Called when an attribute is deleting
-     */
-    public function deleting()
-    {
-        app('amethyst.attribute-schema')->getAttributes()->where('data', $this->attributeSchema->data)->filter(function ($i) {
-
-            if (in_array($this->attributeSchema->name, explode(",", $i->require))) {
-                
-                throw new RequireDependencyException(sprintf(
-                    "You cannot delete `%s`, because `%s` requires it function.", 
-                    $this->attributeSchema->name,
-                    $i->name
-                ));
-            }
-        });
-
-        // ..
-    }
-
-    /**
-     * Called when an attribute is saving
-     */
-    public function saving()
-    {
-        // ..
-    }
-
 }

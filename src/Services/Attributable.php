@@ -25,13 +25,12 @@ class Attributable
         $this->reload();
 
         Manager::listen('boot', function ($data) {
-
             $manager = $data->manager;
 
             $name = $manager->getName();
 
-            $attributes = $this->attributes->filter(function ($attribute) use ($name) { 
-                return $attribute->model === strtolower($name); 
+            $attributes = $this->attributes->filter(function ($attribute) use ($name) {
+                return $attribute->model === strtolower($name);
             });
 
             foreach ($attributes as $attribute) {

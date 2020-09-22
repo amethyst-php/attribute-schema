@@ -8,7 +8,7 @@ use Railken\Lem\Attributes\BaseAttribute;
 class EnumResolver extends Resolver
 {
     /**
-     * Return \Railken\Lem\Attributes\BaseAttribute class
+     * Return \Railken\Lem\Attributes\BaseAttribute class.
      *
      * @return string
      */
@@ -18,10 +18,10 @@ class EnumResolver extends Resolver
     }
 
     /**
-     * Load additional options for the attribute
+     * Load additional options for the attribute.
      *
      * @param BaseAttribute $attribute
-     * @param \stdClass $options
+     * @param \stdClass     $options
      *
      * @return void
      */
@@ -30,12 +30,11 @@ class EnumResolver extends Resolver
         if (empty($options->options)) {
             throw new AttributeSchemaPayloadInvalidException($attributeSchema);
         }
-        
+
         $attribute->setOptions($options->options);
     }
-    
+
     public function validate()
     {
-
     }
 }

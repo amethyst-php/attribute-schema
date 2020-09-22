@@ -2,13 +2,10 @@
 
 namespace Amethyst\AttributeSchemaResolvers;
 
-use Amethyst\Exceptions\AttributeSchemaPayloadInvalidException;
-use Railken\Lem\Attributes\BaseAttribute;
-
 class DateResolver extends Resolver
 {
     /**
-     * Return \Railken\Lem\Attributes\BaseAttribute class
+     * Return \Railken\Lem\Attributes\BaseAttribute class.
      *
      * @return string
      */
@@ -19,6 +16,5 @@ class DateResolver extends Resolver
 
     public function validate()
     {
-
     }
 }

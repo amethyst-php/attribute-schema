@@ -45,7 +45,6 @@ class AttributeSchemaSchema extends Schema
             Attributes\YamlAttribute::make('options')
                 ->setValidator(function (EntityContract $entity, $value) {
                     $options = (object) Yaml::parse((string) $attributeRaw->options);
-
                 }),
             Attributes\TextAttribute::make('require')
                 ->setFillable(false)

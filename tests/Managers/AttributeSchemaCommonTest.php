@@ -2,14 +2,11 @@
 
 namespace Amethyst\Tests\Managers;
 
-use Amethyst\Fakers\AttributeSchemaFaker;
 use Amethyst\Fakers\FooFaker;
 use Amethyst\Managers\AttributeSchemaManager;
 use Amethyst\Managers\FooManager;
 use Amethyst\Models\Foo;
 use Amethyst\Tests\BaseTest;
-use Railken\Lem\Support\Testing\TestableBaseTrait;
-use Symfony\Component\Yaml\Yaml;
 
 abstract class AttributeSchemaCommonTest extends BaseTest
 {
@@ -23,17 +20,16 @@ abstract class AttributeSchemaCommonTest extends BaseTest
     public function commonField($name, $type, $valid = [], $invalid = [], $options = '', $delete = true)
     {
         $attribute = (new AttributeSchemaManager())->createOrFail([
-            'name'   => $name,
-            'schema' => $type,
-            'model'  => 'foo',
-            'options' => $options
+            'name'    => $name,
+            'schema'  => $type,
+            'model'   => 'foo',
+            'options' => $options,
         ])->getResource();
         $fooManager = new FooManager();
 
         $resources = [];
 
         foreach ($valid as $v) {
-
             $parameters = FooFaker::make()->parameters();
             $parameters->add(is_array($v) ? $v : [$name => $v]);
 
@@ -54,7 +50,6 @@ abstract class AttributeSchemaCommonTest extends BaseTest
         }
 
         foreach ($invalid as $v) {
-
             $parameters = FooFaker::make()->parameters()
                 ->set($name, $v);
 
