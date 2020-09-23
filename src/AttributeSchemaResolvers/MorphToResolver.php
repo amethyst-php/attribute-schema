@@ -44,18 +44,27 @@ class MorphToResolver extends Resolver
         $attribute->setRelations(app('amethyst')->getDataManagers());
     }
 
+    /**
+     * Attach custom options to the $column
+     * when migrating the database.
+     *
+     * @param $column
+     */
     public function callDatabaseOptions($column)
     {
         $column->unsigned();
+    }
+
+    /**
+     * Called when an attribute is saving.
+     */
+    public function saving()
+    {
+        $this->attributeSchema->require = implode(',', [$this->getOptions()->relationKey]);
     }
 
     public function validate()
     {
     }
 
-    // Dependencies on same field
-    public function saving()
-    {
-        $this->attributeSchema->require = implode(',', [$this->getOptions()->relationKey]);
-    }
 }

@@ -35,6 +35,12 @@ class BelongsToResolver extends Resolver
         $attribute->setRelationManager(app('amethyst')->findManagerByName($options->relationData));
     }
 
+    /**
+     * Attach custom options to the $column
+     * when migrating the database.
+     *
+     * @param $column
+     */
     public function callDatabaseOptions($column)
     {
         $column->unsigned();
