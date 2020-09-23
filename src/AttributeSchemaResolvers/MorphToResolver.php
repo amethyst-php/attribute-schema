@@ -66,5 +66,4 @@ class MorphToResolver extends Resolver
     public function validate()
     {
     }
-
 }
