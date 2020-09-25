@@ -17,6 +17,10 @@ class AttributeSchemaObserver
     public function created(AttributeSchema $attributeSchema)
     {
         $this->reload($attributeSchema);
+
+        if ($attributeSchema->schema === 'BelongsTo' || $attributeSchema->schema === 'MorphTo') {
+            $this->syncRelationSchema($attributeSchema);
+        }
     }
 
     /**
@@ -85,10 +89,6 @@ class AttributeSchemaObserver
                 $column->change();
             }
         });
-
-        if ($attributeSchema->schema === 'BelongsTo' || $attributeSchema->schema === 'MorphTo') {
-            $this->syncRelationSchema($attributeSchema);
-        }
     }
 
     /**
