@@ -1,6 +1,6 @@
 # amethyst-attribute
 
-[![Action Status](https://github.com/amethyst-php/attribute/workflows/Test/badge.svg)](https://github.com/amethyst-php/attribute/actions)
+[![Action Status](https://github.com/amethyst-php/attribute-schema/workflows/Test/badge.svg)](https://github.com/amethyst-php/attribute/actions)
 [![Amethyst](https://img.shields.io/badge/package-Amethyst-7e57c2)](https://github.com/amethyst-php/amethyst)
 
 # Requirements
