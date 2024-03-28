@@ -29,5 +29,7 @@ class AttributeSchemaServiceProvider extends CommonServiceProvider
         parent::boot();
 
         AttributeSchema::observe(AttributeSchemaObserver::class);
+
+        app('amethyst.attribute-schema')->boot();
     }
 }
