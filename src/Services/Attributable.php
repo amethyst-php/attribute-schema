@@ -11,6 +11,8 @@ class Attributable
 {
     protected $attributes;
 
+    protected $booted = false;
+
     public function reload()
     {
         $this->attributes = Models\AttributeSchema::all();
@@ -18,6 +20,10 @@ class Attributable
 
     public function boot()
     {
+        if ($this->booted) {
+            return;
+        }
+
         if (!Schema::hasTable(Config::get('amethyst.attribute-schema.data.attribute-schema.table'))) {
             return;
         }
@@ -25,6 +31,7 @@ class Attributable
         $this->reload();
 
         Manager::listen('boot', function ($data) {
+
             $manager = $data->manager;
 
             $name = $manager->getName();
@@ -37,6 +44,8 @@ class Attributable
                 $attribute->getResolver()->boot($manager);
             }
         });
+
+        $this->booted = true;
     }
 
     public function getAttributes()

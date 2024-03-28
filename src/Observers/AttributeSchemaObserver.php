@@ -79,8 +79,6 @@ class AttributeSchemaObserver
 
             $arguments = $attributeSchema->getResolver()->getDatabaseArguments();
 
-            print_r($method);
-
             $column = $table->$method(...$arguments);
 
             $attributeSchema->getResolver()->callDatabaseOptions($column);
