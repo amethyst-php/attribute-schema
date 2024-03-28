@@ -2,7 +2,7 @@
 
 namespace Amethyst\Tests\Managers;
 
-class AttributeSchemaTextTest extends AttributeSchemaCommonTest
+class AttributeSchemaTextTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicText()
     {

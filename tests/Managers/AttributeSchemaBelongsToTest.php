@@ -6,7 +6,7 @@ use Amethyst\Fakers\FooFaker;
 use Amethyst\Managers\FooManager;
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaBelongsToTest extends AttributeSchemaCommonTest
+class AttributeSchemaBelongsToTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicBelongsTo()
     {

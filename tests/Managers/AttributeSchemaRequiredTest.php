@@ -6,7 +6,7 @@ use Amethyst\Fakers\FooFaker;
 use Amethyst\Managers\AttributeSchemaManager;
 use Amethyst\Managers\FooManager;
 
-class AttributeSchemaRequiredTest extends AttributeSchemaCommonTest
+class AttributeSchemaRequiredTest extends AttributeSchemaCommonTestCase
 {
     public function testRequired()
     {

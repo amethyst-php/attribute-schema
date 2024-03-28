@@ -2,7 +2,7 @@
 
 namespace Amethyst\Tests\Managers;
 
-class AttributeSchemaEmailTest extends AttributeSchemaCommonTest
+class AttributeSchemaEmailTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicEmail()
     {

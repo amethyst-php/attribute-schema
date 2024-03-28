@@ -2,7 +2,7 @@
 
 namespace Amethyst\Tests\Managers;
 
-class AttributeSchemaDateTimeTest extends AttributeSchemaCommonTest
+class AttributeSchemaDateTimeTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicDateTime()
     {

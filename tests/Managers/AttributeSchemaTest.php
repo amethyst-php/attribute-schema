@@ -4,10 +4,10 @@ namespace Amethyst\Tests\Managers;
 
 use Amethyst\Fakers\AttributeSchemaFaker;
 use Amethyst\Managers\AttributeSchemaManager;
-use Amethyst\Tests\BaseTest;
+use Amethyst\Tests\BaseTestCase;
 use Railken\Lem\Support\Testing\TestableBaseTrait;
 
-class AttributeSchemaTest extends BaseTest
+class AttributeSchemaTest extends BaseTestCase
 {
     use TestableBaseTrait;
 

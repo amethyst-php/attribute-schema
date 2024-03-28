@@ -1,12 +1,11 @@
 # amethyst-attribute
 
-[![Action Status](https://github.com/amethyst-php/attribute/workflows/Test/badge.svg)](https://github.com/amethyst-php/attribute/actions)
-
+[![Action Status](https://github.com/amethyst-php/attribute/workflows/Test/badge.svg)](https://github.com/amethyst-php/attribute/actions)./vendor
 [Amethyst](https://github.com/amethyst-php/amethyst) package.
 
 # Requirements
 
-PHP 7.1 and later.
+PHP 7.2 and later.
 
 ## Installation
 

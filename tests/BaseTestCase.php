@@ -2,7 +2,7 @@
 
 namespace Amethyst\Tests;
 
-abstract class BaseTest extends \Orchestra\Testbench\TestCase
+abstract class BaseTestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * Setup the test environment.
@@ -14,7 +14,6 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
         $this->artisan('migrate:fresh');
 
         app('amethyst.attribute-schema')->boot();
-        app('amethyst.relation-schema')->boot();
         app('eloquent.mapper')->boot();
     }
 

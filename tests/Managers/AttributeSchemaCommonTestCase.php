@@ -6,9 +6,9 @@ use Amethyst\Fakers\FooFaker;
 use Amethyst\Managers\AttributeSchemaManager;
 use Amethyst\Managers\FooManager;
 use Amethyst\Models\Foo;
-use Amethyst\Tests\BaseTest;
+use Amethyst\Tests\BaseTestCase;
 
-abstract class AttributeSchemaCommonTest extends BaseTest
+abstract class AttributeSchemaCommonTestCase extends BaseTestCase
 {
     public function resetFields()
     {
@@ -32,7 +32,7 @@ abstract class AttributeSchemaCommonTest extends BaseTest
         foreach ($valid as $v) {
             $parameters = FooFaker::make()->parameters();
             $parameters->add(is_array($v) ? $v : [$name => $v]);
-
+            
             $foo = $fooManager->createOrFail($parameters)->getResource();
             $foo->save();
 

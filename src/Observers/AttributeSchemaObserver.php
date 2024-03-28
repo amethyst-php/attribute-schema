@@ -79,6 +79,8 @@ class AttributeSchemaObserver
 
             $arguments = $attributeSchema->getResolver()->getDatabaseArguments();
 
+            print_r($method);
+
             $column = $table->$method(...$arguments);
 
             $attributeSchema->getResolver()->callDatabaseOptions($column);
@@ -223,12 +225,16 @@ class AttributeSchemaObserver
             }
         }
 
-        if (!empty($payload->relationKey)) {
-            $obj['foreignKey'] = $payload->relationKey;
-        }
-
         if (!empty($payload->ownerKey)) {
             $obj['ownerKey'] = $payload->ownerKey;
+        }
+
+        if (!empty($payload->relationKey)) {
+            $obj['keyName'] = $payload->relationKey;
+        }
+
+        if ($attributeSchema->schema === 'MorphTo') {
+            $obj['keyId'] = $attributeSchema->name;
         }
 
         return Yaml::dump($obj);

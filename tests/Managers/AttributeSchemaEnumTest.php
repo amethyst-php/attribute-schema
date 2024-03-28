@@ -4,7 +4,7 @@ namespace Amethyst\Tests\Managers;
 
 use Symfony\Component\Yaml\Yaml;
 
-class AttributeSchemaEnumTest extends AttributeSchemaCommonTest
+class AttributeSchemaEnumTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicEnum()
     {

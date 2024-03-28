@@ -3,16 +3,21 @@
 namespace Amethyst\Tests\Managers;
 
 use Symfony\Component\Yaml\Yaml;
+use Amethyst\Managers\FooManager;
+use Amethyst\Fakers\FooFaker;
 
-class AttributeSchemaMorphToTest extends AttributeSchemaCommonTest
+class AttributeSchemaMorphToTest extends AttributeSchemaCommonTestCase
 {
     public function testBasicMorphTo()
     {
         $this->resetFields();
 
         $foos = $this->commonField('target_key', 'DataName', ['foo'], ['invalidName']);
+            
+        $fooManager = new FooManager();
+        $foo = $fooManager->createOrFail(FooFaker::make()->parameters())->getResource();
 
-        $this->commonField('target_id', 'MorphTo', [['target_key' => 'foo', 'target_id' => $foos[0]->id]], [999], Yaml::dump([
+        $this->commonField('target_id', 'MorphTo', [['target_key' => 'foo', 'target_id' => $foo->id]], [999], Yaml::dump([
             'relationName' => 'target',
             'relationKey'  => 'target_key',
         ]));
