@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Railken\Lem\Attributes;
 use Railken\Lem\Contracts\EntityContract;
 use Railken\Lem\Schema;
+use Symfony\Component\Yaml\Yaml;
 
 class AttributeSchemaSchema extends Schema
 {
@@ -44,7 +45,9 @@ class AttributeSchemaSchema extends Schema
                 }),
             Attributes\YamlAttribute::make('options')
                 ->setValidator(function (EntityContract $entity, $value) {
-                    $options = (object) Yaml::parse((string) $attributeRaw->options);
+                    // $options = (object) Yaml::parse((string) $attributeRaw->options);
+
+                    return true;
                 }),
             Attributes\TextAttribute::make('require')
                 ->setFillable(false)

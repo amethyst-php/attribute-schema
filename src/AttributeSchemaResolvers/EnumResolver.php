@@ -28,7 +28,7 @@ class EnumResolver extends Resolver
     public function loadOptions(BaseAttribute $attribute, \stdClass $options)
     {
         if (empty($options->options)) {
-            throw new AttributeSchemaPayloadInvalidException($attributeSchema);
+            throw new AttributeSchemaPayloadInvalidException($this->attributeSchema);
         }
 
         $attribute->setOptions($options->options);
