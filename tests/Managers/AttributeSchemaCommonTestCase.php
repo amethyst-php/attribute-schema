@@ -32,7 +32,7 @@ abstract class AttributeSchemaCommonTestCase extends BaseTestCase
         foreach ($valid as $v) {
             $parameters = FooFaker::make()->parameters();
             $parameters->add(is_array($v) ? $v : [$name => $v]);
-            
+
             $foo = $fooManager->createOrFail($parameters)->getResource();
             $foo->save();
 

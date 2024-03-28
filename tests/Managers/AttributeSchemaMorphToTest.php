@@ -13,7 +13,7 @@ class AttributeSchemaMorphToTest extends AttributeSchemaCommonTestCase
         $this->resetFields();
 
         $foos = $this->commonField('target_key', 'DataName', ['foo'], ['invalidName']);
-            
+
         $fooManager = new FooManager();
         $foo = $fooManager->createOrFail(FooFaker::make()->parameters())->getResource();
 
