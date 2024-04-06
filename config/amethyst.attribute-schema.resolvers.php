@@ -12,4 +12,5 @@ return [
     'DateTime'  => Amethyst\AttributeSchemaResolvers\DateTimeResolver::class,
     'DataName'  => Amethyst\AttributeSchemaResolvers\DataNameResolver::class,
     'MorphTo'   => Amethyst\AttributeSchemaResolvers\MorphToResolver::class,
+    'Yaml'      => Amethyst\AttributeSchemaResolvers\YamlResolver::class,
 ];

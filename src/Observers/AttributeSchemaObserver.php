@@ -75,7 +75,8 @@ class AttributeSchemaObserver
         });
 
         Schema::table($data->newEntity()->getTable(), function (Blueprint $table) use ($attributeSchema, $onChange, $options) {
-            $method = $this->getMethod($attributeSchema);
+            
+            $method = !empty($options->column) ? $options->column : $this->getMethod($attributeSchema);
 
             $arguments = $attributeSchema->getResolver()->getDatabaseArguments();
 
